@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import './edit.css';
+import '../styles/edit.css';
 
 export default class UpdateArticle extends Component {
     constructor(props) {

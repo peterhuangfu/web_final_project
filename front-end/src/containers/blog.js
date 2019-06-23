@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, Switch, Route, Redirect } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -14,6 +15,10 @@ import MusicIcon from '@material-ui/icons/QueueMusic';
 import DataIcon from '@material-ui/icons/Receipt';
 import MenuIcon from '@material-ui/icons/Menu';
 import LogoutIcon from '@material-ui/icons/ArrowForward';
+import Fab from '@material-ui/core/Fab';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Articles from "./articles";
 import ArticleDetail from "./article_detail";
@@ -22,13 +27,13 @@ import PostArticle from "./post_article";
 import UpdateProfile from "./update_profile";
 import Home from './home';
 import Profile from './profile';
-import './blog.css';
-import './drawer.css';
+import '../styles/blog.css';
+import '../styles/drawer.css';
 
 export default class Blog extends Component {
     constructor(props) {
         super(props);
-        this.state = { open: false };
+        this.state = { open: false, fabOpen: false };
     }
 
     toggleDrawer = open => event => {
@@ -37,7 +42,7 @@ export default class Blog extends Component {
         }
 
         this.setState({ open: open });
-    };
+    }
 
     sideList = (
         <div
@@ -59,7 +64,7 @@ export default class Blog extends Component {
                 <ListItemText primary="進行轉譜"/>
               </ListItem>
             </NavLink>
-            <NavLink to="/home" className="drawer_link">
+            <NavLink to="/articles" className="drawer_link">
               <ListItem button>
                 <ListItemIcon><DataIcon /></ListItemIcon>
                 <ListItemText primary="我的音樂庫"/>
@@ -74,7 +79,7 @@ export default class Blog extends Component {
           </List>
           <Divider />
           <List>
-            <NavLink to="/home" className="drawer_link">
+            <NavLink to="/profile" className="drawer_link">
               <ListItem button>
                 <ListItemIcon><PersonIcon /></ListItemIcon>
                 <ListItemText primary="個人檔案"/>
@@ -88,21 +93,28 @@ export default class Blog extends Component {
             </NavLink>
           </List>
         </div>
-    );
+    )
+
+    handleToggle = () => {
+        this.setState({ fabOpen: true });
+      }
+    
+    handleClose = () => {
+        this.setState({ fabOpen: false });
+      }
 
     componentDidMount() {
         window.scrollTo(0,0);
     }
 
     render() {
-        const clear = { clear: 'both' };
         return (
             <div className="bg-container">
                 <div style={{ position: 'relative' }}>
                     <header>
                         <div className="homepage-header">
-                            <div className="homepage-title">
-                                <IconButton style={{ display: 'inline-block', marginBottom: '2vh' }}
+                            <div className="homepage-menu">
+                                <IconButton style={{ marginBottom: '2vh' }}
                                     color="inherit"
                                     onClick={this.toggleDrawer(true)}>
                                     <MenuIcon />
@@ -110,7 +122,23 @@ export default class Blog extends Component {
                                 <Drawer open={this.state.open} onClose={this.toggleDrawer(false)}>
                                     {this.sideList}
                                 </Drawer>
-                                <h1 style={{ display: 'inline-block', marginLeft: '2vw' }}><NavLink className="nav_title" to="/home">Music Convertion</NavLink></h1>
+                            </div>
+                            <div className="homepage-title">
+                                <h1 style={{ marginLeft: '2vw' }}><NavLink className="nav_title" to="/home">Music Convertion</NavLink></h1>
+                            </div>
+                            <div className="homepage-fab">
+                                <Fab onClick={this.handleToggle}
+                                    style={{ maxHeight: '50px', maxWidth: '50px', top: '1.5vh', marginLeft: '15vw' }}
+                                    color="primary"
+                                    className="fab_button"><PersonIcon />
+                                </Fab>
+                                <Dialog className="fab-dialog" open={this.state.fabOpen} onClose={this.handleClose}>
+                                    <DialogTitle id="fab-menu">您好，皇甫立翔！</DialogTitle>
+                                    <DialogActions>
+                                        <Button onClick={this.handleClose} color="primary">取消</Button>
+                                        <Button onClick={this.handleClose} color="primary">登出</Button>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         </div>
                     </header>

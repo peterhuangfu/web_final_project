@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import './profile.css';
+import '../styles/profile.css';
 
 export default class Profile extends Component {
     constructor(props) {
@@ -82,6 +82,14 @@ export default class Profile extends Component {
                         <Button onClick={this.checkPass} color="primary">確認</Button>
                     </DialogActions>
                 </Dialog>
+                <div style={{ minHeight: '10vh' }}></div>
+                <div className="profile-title">
+                    <b>轉譜紀錄</b>
+                </div>
+                <hr />
+                <div className="profile-container">
+                    <div className="profile-text-2 profile-text">{this.state.content.split('\n').map(item => { return <span>{item}<br /></span> } )}</div>
+                </div>
             </div>
         );
     }
