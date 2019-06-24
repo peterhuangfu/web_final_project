@@ -1,4 +1,4 @@
-.article-detail_button-container {
+.music-detail_button-container {
     margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
@@ -7,12 +7,12 @@
     justify-content: flex-start;
 }
 
-.article-detail_button-subcontainer {
+.music-detail_button-subcontainer {
     display: flex;
     width: auto;
 }
 
-.article-detail_button {
+.music-detail_button {
     width: 4.5vw;
     height: 5vh;
     line-height: 4.5vh;
@@ -25,7 +25,7 @@
     cursor: pointer;
 }
 
-.article-detail_button:hover {
+.music-detail_button:hover {
     color: black;
     background-color: #ffffff;
 }

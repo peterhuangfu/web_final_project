@@ -115,11 +115,11 @@
     color: black;
 }
 
-.article-list-container {
+.music-list-container {
     padding-top: 6.5vh;
 }
 
-.article-item {
+.music-item {
     background-color: rgb(255, 255, 255);
     width: 85%;
     margin-left: 5%;
@@ -129,6 +129,6 @@
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.article-item:hover {
+.music-item:hover {
     background-color: rgba(90, 90, 90, 0.5);
 }

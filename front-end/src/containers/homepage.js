@@ -123,7 +123,7 @@ export default class Homepage extends Component {
                                 </Drawer>
                             </div>
                             <div className="homepage-title">
-                                <h1 style={{ marginLeft: '2vw' }}><NavLink className="nav_title" to="/home">Music Convertion</NavLink></h1>
+                                <h1 style={{ marginLeft: '2vw' }}><NavLink className="nav_title" to="/home">Online Music Convertion</NavLink></h1>
                             </div>
                             <div className="homepage-fab">
                                 <Fab onClick={this.handleToggle}

@@ -59,13 +59,13 @@ export default class MymusicDetail extends Component {
         const { id } = this.props.match.params;
         return (
             <div>
-                <div className="article-itself">
+                <div className="music-itself">
                     <Post id={id} title={this.state.title} source={this.state.img_source} author={this.state.author} content={this.state.content} time={this.state.time} />
                 </div>
-                <div className="article-detail_button-container">
-                    <div className="article-detail_button-subcontainer"><button className="newPostButton" onClick={this.handleClickOpen}><b>編輯</b></button></div>
-                    <div className="article-detail_button-subcontainer"><button className="article-detail_button" onClick={this.handleClickOpenDel}><b>刪除</b></button></div>
-                    <div className="article-detail_button-subcontainer"><button className="article-detail_button" onClick={this.goBack}><b>返回</b></button></div>
+                <div className="music-detail_button-container">
+                    <div className="music-detail_button-subcontainer"><button className="newPostButton" onClick={this.handleClickOpen}><b>編輯</b></button></div>
+                    <div className="music-detail_button-subcontainer"><button className="music-detail_button" onClick={this.handleClickOpenDel}><b>刪除</b></button></div>
+                    <div className="music-detail_button-subcontainer"><button className="music-detail_button" onClick={this.goBack}><b>返回</b></button></div>
                 </div>
             </div>
         );
