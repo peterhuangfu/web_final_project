@@ -3,26 +3,21 @@ import { NavLink } from "react-router-dom";
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
 export default class Mymusic extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: [{img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'Two', author: 'Aaron'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
-            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'}
+        this.state = { data: [{id: '1', img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {id: '2', img: 'http://i.imgur.com/Dqef6.jpg', title: 'Two', author: 'Aaron'},
+            {id: '3', img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {id: '4', img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {id: '5', img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {id: '6', img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {id: '7', img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {id: '8', img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {id: '9', img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'}
         ] };
     }
     componentDidMount() {
@@ -76,22 +71,26 @@ export default class Mymusic extends Component {
         ));
         return list.length ? (
             <div>
+                
                 <GridList cellHeight={180} className="grid-list">
                     {this.state.data.map(data => (
-                    <GridListTile key={data.img} style={{ width: '25vw', height: '40vh', padding: '1em'}}>
-                        <img src={data.img} alt={data.title} />
-                        <GridListTileBar
-                        title={data.title}
-                        subtitle={<span>by: {data.author}</span>}
-                        actionIcon={
-                            <IconButton aria-label={`info about ${data.title}`} style={{ color: 'rgba(255, 255, 255, 0.54)' }}>
-                                <InfoIcon />
-                            </IconButton>
-                        }
-                        />
+                    <GridListTile key={data.id} style={{ width: '25vw', height: '40vh', padding: '1em'}}>
+                        <NavLink to={"/mymusic/" + data.id}>
+                            <img src={data.img} alt={data.title} style={{ maxWidth: '25vw', maxHeight: '40vh' }}/>
+                            <GridListTileBar
+                            title={data.title}
+                            subtitle={<span>by {data.author}</span>}
+                            actionIcon={
+                                <IconButton aria-label={`info about ${data.title}`} style={{ color: 'rgba(255, 255, 255, 0.54)' }}>
+                                    <InfoIcon />
+                                </IconButton>
+                            }
+                            />
+                        </NavLink>
                     </GridListTile>
                     ))}
                 </GridList>
+                
                 {/* <button className="newPostButton" onClick={this.handleClickOpen}><b>上傳</b></button>
                 <div className="article-list-container">{list}</div> */}
             </div>
