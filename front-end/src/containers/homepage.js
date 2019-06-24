@@ -26,6 +26,7 @@ import Mymusic from './mymusic';
 import MymusicDetail from './mymusic_detail';
 import Home from './home';
 import Profile from './profile';
+import Login from './login';
 import '../styles/homepage.css';
 import '../styles/drawer.css';
 
@@ -84,7 +85,7 @@ export default class Homepage extends Component {
                 <ListItemText primary="個人檔案"/>
               </ListItem>
             </NavLink>
-            <NavLink to="/home" className="drawer_link">
+            <NavLink to="/login" className="drawer_link">
               <ListItem button>
                 <ListItemIcon style={{ color: '#ffffff' }}><LogoutIcon /></ListItemIcon>
                 <ListItemText primary="登出"/>
@@ -135,7 +136,7 @@ export default class Homepage extends Component {
                                     <DialogTitle id="fab-menu">您好，皇甫立翔！</DialogTitle>
                                     <DialogActions>
                                         <Button onClick={this.handleClose} color="primary">取消</Button>
-                                        <Button onClick={this.handleClose} color="primary">登出</Button>
+                                        <Button onClick={this.logout} color="primary">登出</Button>
                                     </DialogActions>
                                 </Dialog>
                             </div>
@@ -148,6 +149,7 @@ export default class Homepage extends Component {
                             <Route path="/mymusic/:id?" component={MymusicDetail} />
                             <Route path="/convertion" component={Convertion} />
                             <Route path="/profile" component={Profile} />
+                            
                             <Route path="/" component={Home} />
                             <Route path="/home" component={Home} />
                             <Redirect from="/home" to="/" />
