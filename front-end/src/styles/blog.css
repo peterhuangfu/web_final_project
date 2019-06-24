@@ -45,6 +45,13 @@
     text-decoration: none;
 }
 
+.nav_a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px;
+}
+
 .fab_button {
     float: right;
 }

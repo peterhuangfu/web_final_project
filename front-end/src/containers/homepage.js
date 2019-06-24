@@ -20,17 +20,16 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import Articles from "./articles";
-import ArticleDetail from "./article_detail";
-import UpdateArticle from "./update_article";
-import PostArticle from "./post_article";
-import UpdateProfile from "./update_profile";
+import Convertion from './convertion';
+import Download from './download';
+import Mymusic from './mymusic';
+import MymusicDetail from './mymusic_detail';
 import Home from './home';
 import Profile from './profile';
 import '../styles/blog.css';
 import '../styles/drawer.css';
 
-export default class Blog extends Component {
+export default class Homepage extends Component {
     constructor(props) {
         super(props);
         this.state = { open: false, fabOpen: false };
@@ -58,19 +57,19 @@ export default class Blog extends Component {
                     <ListItemText primary="首頁"/>
               </ListItem>
             </NavLink>
-            <NavLink to="/home" className="drawer_link">
+            <NavLink to="/convertion" className="drawer_link">
               <ListItem button>
                 <ListItemIcon><MusicIcon /></ListItemIcon>
                 <ListItemText primary="進行轉譜"/>
               </ListItem>
             </NavLink>
-            <NavLink to="/articles" className="drawer_link">
+            <NavLink to="/mymusic" className="drawer_link">
               <ListItem button>
                 <ListItemIcon><DataIcon /></ListItemIcon>
                 <ListItemText primary="我的音樂庫"/>
               </ListItem>
             </NavLink>
-            <NavLink to="/home" className="drawer_link">
+            <NavLink to="/download" className="drawer_link">
               <ListItem button>
                 <ListItemIcon><DownloadIcon /></ListItemIcon>
                 <ListItemText primary="下載專區"/>
@@ -144,12 +143,11 @@ export default class Blog extends Component {
                     </header>
                     <section className="homepage-section">
                         <Switch>
-                            <Route exact path="/articles" component={Articles} />
-                            <Route path="/articles/:id?" component={ArticleDetail} />
-                            <Route path="/updateArticle/:id?" component={UpdateArticle} />
-                            <Route path="/postArticle" component={PostArticle} />
+                            <Route path="/download" component={Download} />
+                            <Route exact path="/mymusic" component={Mymusic} />
+                            <Route path="/mymusic/:id?" component={MymusicDetail} />
+                            <Route path="/convertion" component={Convertion} />
                             <Route path="/profile" component={Profile} />
-                            <Route path="/updateProfile" component={UpdateProfile} />
                             <Route path="/" component={Home} />
                             <Route path="/home" component={Home} />
                             <Redirect from="/home" to="/" />

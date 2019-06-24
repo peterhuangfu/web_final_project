@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { HashRouter } from 'react-router-dom';
-import Blog from './containers/blog';
+import Homepage from './containers/homepage';
 
-class Homepage extends Component {
+class App extends Component {
   render() {
     return (
       <HashRouter>
 				<div>
-					<Blog />
+					<Homepage />
 				</div>
 			</HashRouter>
     );
   }
 }
 
-export default Homepage;
+export default App;
