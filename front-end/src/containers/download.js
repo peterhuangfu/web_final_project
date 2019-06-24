@@ -51,13 +51,12 @@ export default class Download extends Component {
         const style = { float: 'right', color: '#ffffff' };
         const list = this.state.data.map((e, i) => (
             <div key={i} className="article-item">
-                <span>&nbsp;&nbsp;</span><NavLink className="nav_a" to={"/articles/" + e.id}><b>【{e.title}】</b></NavLink>
+                <span>&nbsp;&nbsp;</span><NavLink className="nav_a" to={"/mymusic/" + e.id}><b>【{e.title}】</b></NavLink>
                 <span style={style}>轉譜時間：{e.time}</span>
             </div>
         ));
         return (
             <div>
-                <button className="newPostButton" onClick={this.handleClickOpen}><b>發文</b></button>
                 <div className="article-list-container">{list}</div>
             </div>
         );

@@ -73,8 +73,8 @@ export default class Mymusic extends Component {
             <div>
                 
                 <GridList cellHeight={180} className="grid-list">
-                    {this.state.data.map(data => (
-                    <GridListTile key={data.id} style={{ width: '25vw', height: '40vh', padding: '1em'}}>
+                    {this.state.data.map((data, i) => (
+                    <GridListTile key={i} style={{ width: '25vw', height: '40vh', padding: '1em'}}>
                         <NavLink to={"/mymusic/" + data.id}>
                             <img src={data.img} alt={data.title} style={{ maxWidth: '25vw', maxHeight: '40vh' }}/>
                             <GridListTileBar

@@ -1,6 +1,6 @@
 .drawer_link {
     text-decoration: none;
-    color: #000000;
+    color: #ffffff;
 }
 
 .drawer_link:hover {
@@ -8,5 +8,5 @@
 }
 
 .drawer_link:active {
-    color: #000000;
+    color: #ffffff;
 }

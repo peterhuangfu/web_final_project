@@ -45,48 +45,48 @@ export default class Homepage extends Component {
 
     sideList = (
         <div
-          style={{ width: '15vw' }}
+          style={{ width: '14vw', minHeight: '100vh', backgroundColor: 'rgba(0, 0, 0, 0.4)', color: '#ffffff' }}
           role="presentation"
           onClick={this.toggleDrawer(false)}
           onKeyDown={this.toggleDrawer(false)}
         >
-          <List>
+          <List style={{ backgroundColor: 'rgba(96, 96, 96, 0.4)' }}>
             <NavLink to="/home" className="drawer_link">
               <ListItem button>
-                    <ListItemIcon><HomeIcon /></ListItemIcon>
+                    <ListItemIcon style={{ color: '#ffffff' }}><HomeIcon /></ListItemIcon>
                     <ListItemText primary="首頁"/>
               </ListItem>
             </NavLink>
             <NavLink to="/convertion" className="drawer_link">
               <ListItem button>
-                <ListItemIcon><MusicIcon /></ListItemIcon>
+                <ListItemIcon style={{ color: '#ffffff' }}><MusicIcon /></ListItemIcon>
                 <ListItemText primary="進行轉譜"/>
               </ListItem>
             </NavLink>
             <NavLink to="/mymusic" className="drawer_link">
               <ListItem button>
-                <ListItemIcon><DataIcon /></ListItemIcon>
+                <ListItemIcon style={{ color: '#ffffff' }}><DataIcon /></ListItemIcon>
                 <ListItemText primary="我的音樂庫"/>
               </ListItem>
             </NavLink>
             <NavLink to="/download" className="drawer_link">
               <ListItem button>
-                <ListItemIcon><DownloadIcon /></ListItemIcon>
+                <ListItemIcon style={{ color: '#ffffff' }}><DownloadIcon /></ListItemIcon>
                 <ListItemText primary="下載專區"/>
               </ListItem>
             </NavLink>
           </List>
           <Divider />
-          <List>
+          <List style={{ backgroundColor: 'rgba(96, 96, 96, 0.4)' }}>
             <NavLink to="/profile" className="drawer_link">
               <ListItem button>
-                <ListItemIcon><PersonIcon /></ListItemIcon>
+                <ListItemIcon style={{ color: '#ffffff' }}><PersonIcon /></ListItemIcon>
                 <ListItemText primary="個人檔案"/>
               </ListItem>
             </NavLink>
             <NavLink to="/home" className="drawer_link">
               <ListItem button>
-                <ListItemIcon><LogoutIcon /></ListItemIcon>
+                <ListItemIcon style={{ color: '#ffffff' }}><LogoutIcon /></ListItemIcon>
                 <ListItemText primary="登出"/>
               </ListItem>
             </NavLink>
