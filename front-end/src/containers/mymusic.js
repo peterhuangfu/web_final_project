@@ -1,10 +1,29 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
 
 export default class Mymusic extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+        this.state = { data: [{img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'Two', author: 'Aaron'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'},
+            {img: 'http://i.imgur.com/Dqef6.jpg', title: 'One', author: 'Peter'}
+        ] };
     }
     componentDidMount() {
         // this.getArticleID();
@@ -55,10 +74,30 @@ export default class Mymusic extends Component {
                 <span style={style}>轉譜時間：{e.time}</span>
             </div>
         ));
-        return (
+        return list.length ? (
             <div>
-                <button className="newPostButton" onClick={this.handleClickOpen}><b>發文</b></button>
-                <div className="article-list-container">{list}</div>
+                <GridList cellHeight={180} className="grid-list">
+                    {this.state.data.map(data => (
+                    <GridListTile key={data.img} style={{ width: '25vw', height: '40vh', padding: '1em'}}>
+                        <img src={data.img} alt={data.title} />
+                        <GridListTileBar
+                        title={data.title}
+                        subtitle={<span>by: {data.author}</span>}
+                        actionIcon={
+                            <IconButton aria-label={`info about ${data.title}`} style={{ color: 'rgba(255, 255, 255, 0.54)' }}>
+                                <InfoIcon />
+                            </IconButton>
+                        }
+                        />
+                    </GridListTile>
+                    ))}
+                </GridList>
+                {/* <button className="newPostButton" onClick={this.handleClickOpen}><b>上傳</b></button>
+                <div className="article-list-container">{list}</div> */}
+            </div>
+        ) : (
+            <div>
+                <span style={{ color: '#ffffff' }}><b>You have not posted anything yet !</b></span>
             </div>
         );
     }

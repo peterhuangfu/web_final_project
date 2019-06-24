@@ -55,10 +55,14 @@ export default class Convertion extends Component {
                 <span style={style}>轉譜時間：{e.time}</span>
             </div>
         ));
-        return (
+        return list.length ? (
             <div>
-                <button className="newPostButton" onClick={this.handleClickOpen}><b>發文</b></button>
+                <button className="newPostButton" onClick={this.handleClickOpen}><b>上傳</b></button>
                 <div className="article-list-container">{list}</div>
+            </div>
+        ) : (
+            <div>
+                <span style={{ color: '#ffffff' }}><b>You have not posted anything yet !</b></span>
             </div>
         );
     }

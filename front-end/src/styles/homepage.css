@@ -5,6 +5,7 @@
     color: white;
     font-size: calc(10px + 1vmin);
     position: fixed;
+    z-index: 2;
 }
 
 .homepage-menu {
@@ -85,6 +86,14 @@
     min-height: 10vh;
     margin-top: 4vh;
     color: white;
+}
+
+.grid-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: flex-start space-around;
+    overflow: hidden;
 }
 
 .newPostButton {

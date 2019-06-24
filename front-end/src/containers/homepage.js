@@ -26,7 +26,7 @@ import Mymusic from './mymusic';
 import MymusicDetail from './mymusic_detail';
 import Home from './home';
 import Profile from './profile';
-import '../styles/blog.css';
+import '../styles/homepage.css';
 import '../styles/drawer.css';
 
 export default class Homepage extends Component {
