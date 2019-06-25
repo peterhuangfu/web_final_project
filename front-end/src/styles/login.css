@@ -8,7 +8,13 @@
 
 .login-header {
     width: 100%;
-    margin-left: 2vw;
+    text-align: center;
+    /* margin-left: 2vw; */
+}
+
+.register-header {
+    width: 100%;
+    text-align: center;
 }
 
 .login-screen {

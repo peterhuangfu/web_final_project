@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { NavLink, Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import axios from "axios";
 import '../styles/login.css';
 
 const CssTextField = withStyles({
@@ -54,29 +53,24 @@ const useStyles = makeStyles(theme => ({
     notchedOutline: {}
 }));
 
-export default function Login() {
+export default function Register() {
     const classes = useStyles();
     const [user, setUser] = React.useState(
-        { account: '', password: '' }
+        { account: '', password: '', email: '' }
     );
 
     const change = name => e => {
         setUser({...user, [name]: e.target.value });
     };
 
-    const login = () => {
-        axios.post("http://localhost:3002/api/putUser", {
-            account: user.account,
-            password: user.account,
-        });
-        
-        setUser({ account: '', password: '' });
+    const register = () => {
+        setUser({ account: '', password: '', email: '' });
     }
 
     return (
         <div className="login">
-            <div className="login-header">
-                <header><h1 style={{ color: '#ffffff', textAlign: 'center', fontSize: '50px' }}><b>歡迎來到 Music Converter</b></h1></header>
+            <div className="register-header">
+                <header><h1 style={{ color: '#ffffff', textAlign: 'center', fontSize: '50px' }}><b>歡迎註冊</b></h1></header>
             </div>
             <div className="login-input">
                 <div className="login-subinput">
@@ -100,6 +94,32 @@ export default function Login() {
                         variant="outlined"
                         margin="normal"
                         onChange={change('account')}
+                        autoComplete="off"
+                    />
+                    </div>
+                </div>
+                <div className="login-subinput">
+                    <div className="login-box"><span style={{ color: '#ffffff' }}>請輸入信箱</span></div>
+                    <div className="login-box">
+                    <CssTextField
+                        id="email"
+                        label="信箱"
+                        type="email"
+                        InputLabelProps={{
+                            classes: {
+                              root: classes.label,
+                              focused: classes.focused
+                            },
+                        }}
+                        InputProps={{
+                            root: classes.outlinedInput,
+                            focused: classes.focused,
+                            className: classes.textField
+                        }}
+                        variant="outlined"
+                        margin="normal"
+                        value={user.email}
+                        onChange={change('email')}
                         autoComplete="off"
                     />
                     </div>
@@ -131,8 +151,8 @@ export default function Login() {
                     </div>
                 </div>
                 <div className="login-actions">
-                    <span className="login-button"><Button variant="contained" onClick={login}><b>登入</b></Button></span>
-                    <span className="login-button"><NavLink to="/register" style={{ textDecoration: 'none' }}><Button variant="contained"><b>註冊</b></Button></NavLink></span>
+                    <span className="login-button"><NavLink to="/login" style={{ textDecoration: 'none' }}><Button variant="contained" onClick={register}><b>註冊</b></Button></NavLink></span>
+                    <span className="login-button"><NavLink to="/login" style={{ textDecoration: 'none' }}><Button variant="contained"><b>返回</b></Button></NavLink></span>
                 </div>
             </div>
         </div>

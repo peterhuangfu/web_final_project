@@ -39,7 +39,6 @@ export default class Homepage extends Component {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
-
         this.setState({ open: open });
     }
 
@@ -85,7 +84,7 @@ export default class Homepage extends Component {
               </ListItem>
             </NavLink>
             <NavLink to="/login" className="drawer_link">
-              <ListItem button>
+              <ListItem button onClick={this.props.logout}>
                 <ListItemIcon style={{ color: '#ffffff' }}><LogoutIcon /></ListItemIcon>
                 <ListItemText primary="登出"/>
               </ListItem>
@@ -135,7 +134,7 @@ export default class Homepage extends Component {
                                     <DialogTitle id="fab-menu">您好，皇甫立翔！</DialogTitle>
                                     <DialogActions>
                                         <Button onClick={this.handleClose} color="primary">取消</Button>
-                                        <Button onClick={this.logout} color="primary">登出</Button>
+                                        <Button onClick={this.props.logout} color="primary">登出</Button>
                                     </DialogActions>
                                 </Dialog>
                             </div>
@@ -151,7 +150,6 @@ export default class Homepage extends Component {
                             
                             <Route path="/" component={Home} />
                             <Route path="/home" component={Home} />
-                            <Redirect from="/home" to="/" />
                         </Switch>
                     </section>
                     <footer className="homepage-footer">
