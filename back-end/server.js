@@ -55,7 +55,7 @@ router.post('/uploadFile', upload.single('file'),(req, res) => {
   //            return res.status(500).json(err)
   //        }
   //   return res.status(200).send(req.file)
-
+  	return res.json({ success: true });
   // })
 
 });
