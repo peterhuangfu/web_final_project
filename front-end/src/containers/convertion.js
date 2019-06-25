@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import UploadIcon from '@material-ui/icons/CloudUpload';
+import axios from "axios";
 import '../styles/convertion.css';
 
 export default class Convertion extends Component {
@@ -15,12 +16,37 @@ export default class Convertion extends Component {
     }
 
     upload = e => {
+        this.putFileInDB();
         this.setState({ upload: 'notyet', files: null });
     }
 
     clear = () => {
         this.setState({ upload: 'notyet', files: null });
     }
+
+    putFileInDB = async () => {
+        console.log(this.state.files[0]);
+        let data = new FormData();
+        data.append('file', this.state.files[0]);
+        // for (var key of data.entries()) {
+        //     console.log(key[0] + ', ' + key[1]);
+        //   }
+        await fetch('http://localhost:3002/api/uploadFile', {
+            method: 'POST',
+            body: data,
+            // headers: {
+            //     'Content-Type': 'multipart/form-data'
+            // }
+        })
+        .then(res => { return res.json() })
+        .then(res => {
+            if(res.success)
+                this.setState({ upload: 'success', files: null, waiting: false });
+            else
+                this.setState({ upload: 'fail', files: null, waiting: false });
+        })
+        .catch((err) => console.error(err));
+    };
 
     render() {
         return (

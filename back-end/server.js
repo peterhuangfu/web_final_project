@@ -3,6 +3,11 @@ const express = require("express");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
+let conn = mongoose.connection;
+let multer = require('multer');
+let GridFsStorage = require('multer-gridfs-storage');
+let Grid = require('gridfs-stream');
+Grid.mongo = mongoose.mongo;
 const User = require("./user")
 
 const API_PORT = 3002;
@@ -20,7 +25,7 @@ mongoose.connect(
 );
 
 let db = mongoose.connection;
-
+let gfs = Grid(db);
 db.once("open", () => console.log("connected to the database"));
 
 // checks if connection with the database is successful
@@ -32,17 +37,41 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'public')
+},
+  filename: function (req, file, cb) {
+  cb(null, Date.now() + '-' +file.originalname )
+}
+})
+var upload = multer({ storage: storage })
+router.post('/uploadFile', upload.single('file'),(req, res) => {
+     console.log(req.body);
+  // upload(req, res, function (err) {
+  //        if (err instanceof multer.MulterError) {
+  //            return res.status(500).json(err)
+  //        } else if (err) {
+  //            return res.status(500).json(err)
+  //        }
+  //   return res.status(200).send(req.file)
+
+  // })
+
+});
+
 // this is our get method
 // this method fetches all available data in our database
-router.get("/getData", (req, res) => {
-  Draw_used.find((err, data) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
-  });
-});
+// router.get("/getData", (req, res) => {
+//   Draw_used.find((err, data) => {
+//     if (err) return res.json({ success: false, error: err });
+//     return res.json({ success: true, data: data });
+//   });
+// });
 
 router.get("/getUser", (req, res) => {
   User.find((err, data) => {
+    console.log(req.body);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
