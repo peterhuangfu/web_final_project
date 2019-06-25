@@ -11,7 +11,6 @@ class App extends Component {
     super(props);
     const token = localStorage.getItem('token') || false;
     this.state = { login: token };
-    // console.log(this.state.login);
   }
 
   login = async () => {
