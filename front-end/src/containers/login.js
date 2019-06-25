@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { NavLink, Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import axios from "axios";
 import '../styles/login.css';
 
 const CssTextField = withStyles({

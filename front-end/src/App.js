@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Homepage from './containers/homepage';
 import Login from './containers/login';
@@ -11,6 +11,7 @@ class App extends Component {
     super(props);
     const token = localStorage.getItem('token') || false;
     this.state = { login: token };
+    console.log(this.state.login);
   }
 
   login = async () => {
@@ -41,7 +42,7 @@ class App extends Component {
             <Switch>
               <Route path="/login" render={this.LoginPage} />
               <Route path="/register" component={Register} />
-              
+              <Redirect from="/" to="/login" />
             </Switch>
           </div>
     );
