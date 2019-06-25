@@ -30,20 +30,28 @@
 .login-subinput {
     display: flex;
     justify-content: center;
-    width: 60%;
+    width: 100%;
     flex-wrap: wrap;
-    margin-left: 22.5vw;
+    /* margin-left: 22.5vw; */
     margin-bottom: 3vh;
     /* border: 1px solid red; */
+}
+
+.login-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .login-actions {
     width: 100%;
     display: flex;
     justify-content: center;
+    /* border: 1px solid orange; */
 }
 
 .login-button {
     padding: 2em;
     color: #ffffff;
+    /* border: 1px solid red; */
 }

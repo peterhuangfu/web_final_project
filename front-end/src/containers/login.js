@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
           color: '#ffffff'
         }
     },
+    focused: {},
     root: {
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
@@ -50,35 +51,36 @@ const useStyles = makeStyles(theme => ({
         border: '1px solid #ffffff'
         }
     },
-    notchedOutline: {},
+    notchedOutline: {}
 }));
 
 export default function Login() {
     const classes = useStyles();
-    const [account, setAccount] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [user, setUser] = React.useState(
+        { account: '', password: '' }
+    );
 
     const change = name => e => {
-        if(name === 'account')
-            setAccount({ name: e.target.value });
-        else
-            setPassword({ name: e.target.value });
+        setUser({...user, [name]: e.target.value });
+        // if(name === 'account')
+        //     setUser({...user, account: e.target.value });
+        // else
+        //     setUser({...user, password: e.target.value });
     };
 
     const login = () => {
         axios.post("http://localhost:3002/api/putUser", {
-            account: account.name,
-            password: password.name,
+            account: user.account,
+            password: user.account,
         });
-        // console.log(account.name)
-        // console.log(password.name)
-        setAccount('');
-        setPassword('');
+        
+        // setAccount({ account: '' });
+        // setPassword({ password: '' });
     }
 
     const register = () => {
-        setAccount('');
-        setPassword('');
+        setUser({ account: '', password: '' });
+        console.log(user);
     }
 
     return (
@@ -88,8 +90,8 @@ export default function Login() {
             </div>
             <div className="login-input">
                 <div className="login-subinput">
-                    <div style={{ width: '47%' }}><span style={{ color: '#ffffff' }}>請輸入帳號</span></div>
-                    <div style={{ width: '60%' }}>
+                    <div className="login-box"><span style={{ color: '#ffffff' }}>請輸入帳號</span></div>
+                    <div className="login-box">
                     <CssTextField
                         id="account"
                         label="帳號"
@@ -102,19 +104,19 @@ export default function Login() {
                         InputProps={{
                             root: classes.outlinedInput,
                             focused: classes.focused,
-                            className: classes.textField,
-                            notchedOutline: classes.notchedOutline,
+                            className: classes.textField
                         }}
+                        value={user.account}
                         variant="outlined"
                         margin="normal"
                         onChange={change('account')}
-                        autoComplete={false}
+                        autoComplete="off"
                     />
                     </div>
                 </div>
                 <div className="login-subinput">
-                    <div style={{ width: '47%' }}><span style={{ color: '#ffffff' }}>請輸入密碼</span></div>
-                    <div style={{ width: '60%' }}>
+                    <div className="login-box"><span style={{ color: '#ffffff' }}>請輸入密碼</span></div>
+                    <div className="login-box">
                     <CssTextField
                         id="password"
                         label="密碼"
@@ -122,26 +124,26 @@ export default function Login() {
                         InputLabelProps={{
                             classes: {
                               root: classes.label,
-                              focused: classes.focused,
+                              focused: classes.focused
                             },
                         }}
                         InputProps={{
                             root: classes.outlinedInput,
                             focused: classes.focused,
-                            className: classes.textField,
-                            notchedOutline: classes.notchedOutline,
+                            className: classes.textField
                         }}
                         variant="outlined"
                         margin="normal"
+                        value={user.password}
                         onChange={change('password')}
-                        autoComplete={false}
+                        autoComplete="off"
                     />
                     </div>
                 </div>
-            </div>
-            <div className="login-actions">
-                <span className="login-button"><Button variant="contained" onClick={login}><b>登入</b></Button></span>
-                <span className="login-button"><Button variant="contained" onClick={register}><b>註冊</b></Button></span>
+                <div className="login-actions">
+                    <span className="login-button"><Button variant="contained" onClick={login}><b>登入</b></Button></span>
+                    <span className="login-button"><Button variant="contained" onClick={register}><b>註冊</b></Button></span>
+                </div>
             </div>
         </div>
     )

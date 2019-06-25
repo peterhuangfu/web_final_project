@@ -26,7 +26,6 @@ import Mymusic from './mymusic';
 import MymusicDetail from './mymusic_detail';
 import Home from './home';
 import Profile from './profile';
-import Login from './login';
 import '../styles/homepage.css';
 import '../styles/drawer.css';
 
