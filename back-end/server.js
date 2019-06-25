@@ -47,7 +47,7 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage })
 router.post('/uploadFile', upload.single('file'),(req, res) => {
-     console.log(req.body);
+    //console.log(req.body);
   // upload(req, res, function (err) {
   //        if (err instanceof multer.MulterError) {
   //            return res.status(500).json(err)
@@ -71,7 +71,7 @@ router.post('/uploadFile', upload.single('file'),(req, res) => {
 
 router.get("/getUser", (req, res) => {
   User.find((err, data) => {
-    console.log(req.body);
+    //console.log(req.body);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
