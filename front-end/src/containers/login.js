@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import axios from "axios";
 import '../styles/login.css';
 
 const CssTextField = withStyles({
@@ -73,7 +72,6 @@ export default function Login(props) {
     };
 
     const login = async () => {
-        let successLogIn = false;
         let registered = false;
         let passwordRight = false;
 
@@ -94,10 +92,8 @@ export default function Login(props) {
         else {
             if (passwordRight === false)
                 alert("wrong password");
-            else {
+            else
                 alert("log in success");
-                successLogIn = true;
-            }
         }
         
         userFromDB = [];

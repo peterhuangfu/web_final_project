@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UploadIcon from '@material-ui/icons/CloudUpload';
-import axios from "axios";
 import '../styles/convertion.css';
 
 export default class Convertion extends Component {
@@ -14,11 +11,6 @@ export default class Convertion extends Component {
 
     componentDidMount() {
         window.scrollTo(0,0);
-    }
-
-    upload = e => {
-        this.putFileInDB();
-        // this.setState({ upload: 'notyet', files: null });
     }
 
     clear = () => {
@@ -58,7 +50,7 @@ export default class Convertion extends Component {
                     </div>
                     <div className="convertion-actions">
                         <div className="sub-actions"><button className="newPostButton" onClick={this.clear}><b>清空</b></button></div>
-                        <div className="sub-actions"><button className="newPostButton" onClick={this.upload}><b>上傳</b></button></div>
+                        <div className="sub-actions"><button className="newPostButton" onClick={this.putFileInDB}><b>上傳</b></button></div>
                     </div>
                     <div className="convertion-state">
                         <span className="convertion-description">
