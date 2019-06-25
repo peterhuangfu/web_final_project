@@ -22,7 +22,7 @@ class App extends Component {
 
   logout = async () => {
       this.setState({ login: false });
-      await localStorage.setItem('token', false);
+      await localStorage.clear();
       this.props.history.push('/login');
   }
 
