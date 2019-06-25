@@ -26,18 +26,14 @@ export default class Convertion extends Component {
     }
 
     putFileInDB = async () => {
-        await this.setState({ waiting: false });
+        await this.setState({ waiting: true });
+
         let data = new FormData();
         data.append('file', this.state.files[0]);
-        // for (var key of data.entries()) {
-        //     console.log(key[0] + ', ' + key[1]);
-        //   }
+        
         await fetch('http://localhost:3002/api/uploadFile', {
             method: 'POST',
-            body: data,
-            // headers: {
-            //     'Content-Type': 'multipart/form-data'
-            // }
+            body: data
         })
         .then(res => { return res.json() })
         .then(res => {
