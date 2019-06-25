@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     notchedOutline: {}
 }));
 
-export default function Register() {
+export default function Register(props) {
     const classes = useStyles();
     const [user, setUser] = React.useState(
         { account: '', password: '', email: '' }
@@ -65,6 +65,7 @@ export default function Register() {
 
     const register = () => {
         setUser({ account: '', password: '', email: '' });
+        props.history.push('/login');
     }
 
     return (
@@ -151,8 +152,8 @@ export default function Register() {
                     </div>
                 </div>
                 <div className="login-actions">
-                    <span className="login-button"><NavLink to="/login" style={{ textDecoration: 'none' }}><Button variant="contained" onClick={register}><b>註冊</b></Button></NavLink></span>
-                    <span className="login-button"><NavLink to="/login" style={{ textDecoration: 'none' }}><Button variant="contained"><b>返回</b></Button></NavLink></span>
+                    <span className="login-button"><Button variant="contained" onClick={register}><b>註冊</b></Button></span>
+                    <span className="login-button"><Button variant="contained" onClick={() => props.history.goBack()}><b>返回</b></Button></span>
                 </div>
             </div>
         </div>

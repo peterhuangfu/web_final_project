@@ -147,7 +147,6 @@ export default class Homepage extends Component {
                             <Route path="/mymusic/:id?" component={MymusicDetail} />
                             <Route path="/convertion" component={Convertion} />
                             <Route path="/profile" component={Profile} />
-                            
                             <Route path="/" component={Home} />
                             <Route path="/home" component={Home} />
                         </Switch>

@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
     notchedOutline: {}
 }));
 
-export default function Login() {
+export default function Login(props) {
     const classes = useStyles();
     const [user, setUser] = React.useState(
         { account: '', password: '' }
@@ -76,6 +76,7 @@ export default function Login() {
         let successLogIn = false;
         let registered = false;
         let passwordRight = false;
+
         await getUserFromDb();
         userFromDB.forEach(dat =>{
             if (dat.account === user.account){
@@ -84,6 +85,7 @@ export default function Login() {
                     passwordRight = true;
             }
         })
+
         if (registered === false) {
             alert("this account is not registered")
         }
@@ -96,14 +98,15 @@ export default function Login() {
             }
         }
         
+        userFromDB = [];
+        setUser({ account: '', password: '' });
+        props.login();
         //console.log(userFromDB[0].account)
         //console.log(userFromDB[0].account);
         // axios.post("http://localhost:3002/api/putUser", {
         //     account: user.account,
         //     password: user.password,
         // });
-        
-        setUser({ account: '', password: '' });
     }
 
     return (

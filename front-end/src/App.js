@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
-import { HashRouter } from 'react-router-dom';
 import { NavLink, Switch, Route, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Homepage from './containers/homepage';
 import Login from './containers/login';
 import Register from './containers/register';
 import './styles/login.css';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { login: false };
+  constructor(props) {
+    super(props);
+    const token = localStorage.getItem('token') || false;
+    this.state = { login: token };
   }
 
-  login = () => {
+  login = async () => {
       this.setState({ login: true });
+      await localStorage.setItem('token', true);
+      this.props.history.push('/home');
   }
 
-  logout = () => {
+  logout = async () => {
       this.setState({ login: false });
+      await localStorage.setItem('token', false);
+      this.props.history.push('/login');
   }
 
   LoginPage = (props) => {
@@ -28,23 +33,19 @@ class App extends Component {
   
   render() {
     return this.state.login ? (
-      <HashRouter>
 				<div>
 					<Homepage logout={this.logout} />
 				</div>
-			</HashRouter>
     ) : (
-        <HashRouter>
           <div className="login-screen">
             <Switch>
               <Route path="/login" render={this.LoginPage} />
               <Route path="/register" component={Register} />
-              <Redirect from="/" to="/login" />
+              
             </Switch>
           </div>
-        </HashRouter>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
