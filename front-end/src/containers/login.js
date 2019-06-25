@@ -59,6 +59,14 @@ export default function Login() {
     const [user, setUser] = React.useState(
         { account: '', password: '' }
     );
+    let userFromDB = [];
+    
+    const getUserFromDb = async () => {
+        await fetch("http://localhost:3002/api/getUser")
+        .then(res => { return res.json() })
+        .then(res => ( userFromDB = res.data) );
+        //console.log(userFromDB[0].account);
+    };
 
     const change = name => e => {
         setUser({...user, [name]: e.target.value });
@@ -68,11 +76,36 @@ export default function Login() {
         //     setUser({...user, password: e.target.value });
     };
 
-    const login = () => {
-        axios.post("http://localhost:3002/api/putUser", {
-            account: user.account,
-            password: user.account,
-        });
+    const login = async () => {
+        let successLogIn = false;
+        let registered = false;
+        let passwordRight = false;
+        await getUserFromDb();
+        userFromDB.forEach(dat =>{
+            if (dat.account === user.account){
+                registered = true;
+                if (dat.password === user.password)
+                    passwordRight = true;
+            }
+        })
+        if (registered === false) {
+            alert("this account is not registered")
+        }
+        else{
+            if (passwordRight === false)
+                alert("wrong password")
+            else{
+                alert("log in success")
+                successLogIn = true;
+            }
+        }
+        
+        //console.log(userFromDB[0].account)
+        //console.log(userFromDB[0].account);
+        // axios.post("http://localhost:3002/api/putUser", {
+        //     account: user.account,
+        //     password: user.password,
+        // });
         
         // setAccount({ account: '' });
         // setPassword({ password: '' });
