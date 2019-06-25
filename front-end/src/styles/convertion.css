@@ -1,0 +1,71 @@
+.convertion {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.convertion-screen {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid orange; */
+}
+
+.convertion-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-left: 1em;
+    padding-top: 3vh;
+}
+
+.sub-actions {
+    width: 20%;
+    /* border: 1px solid orange; */
+    display: flex;
+    justify-content: center;
+}
+
+.convertion-state {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid orange; */
+    padding-top: 3vh;
+}
+
+.convertion-description {
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.upload-button {
+    color: white;
+    width: 25%;
+    height: 55vh;
+    background-color: rgb(78, 78, 78);
+    border-radius: 0.4em 0.4em 0.4em 0.4em;
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.newPostButton {
+    float: right;
+    color: white;
+    width: 4.5vw;
+    height: 5vh;
+    line-height: 4.5vh;
+    background-color: rgb(78, 78, 78);
+    margin-right: 19px;
+    border-radius: 0.4em 0.4em 0.4em 0.4em;
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+}
