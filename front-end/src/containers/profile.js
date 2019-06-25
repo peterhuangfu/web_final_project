@@ -1,11 +1,6 @@
 import React, { Component } from "react";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import '../styles/profile.css';
 
 export default class Profile extends Component {
@@ -71,17 +66,6 @@ export default class Profile extends Component {
                     <img src={this.state.img_source} alt="" className="profile-img"></img>
                     <div className="profile-text">{this.state.content.split('\n').map(item => { return <span>{item}<br /></span> } )}</div>
                 </div>
-                <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">輸入密碼</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>請輸入密碼</DialogContentText>
-                        <TextField autoFocus margin="dense" id="post_verify_password" type="password" fullWidth onKeyUp={this.passInput} />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">取消</Button>
-                        <Button onClick={this.checkPass} color="primary">確認</Button>
-                    </DialogActions>
-                </Dialog>
                 <div style={{ minHeight: '10vh' }}></div>
                 <div className="profile-title">
                     <b>轉譜紀錄</b>

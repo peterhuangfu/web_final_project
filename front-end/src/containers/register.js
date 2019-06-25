@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
 export default function Register(props) {
     const classes = useStyles();
     const [user, setUser] = React.useState(
-        { account: '', password: '', email: '' }
+        { account: '', password: '', email: '', name: '' }
     );
 
     const change = name => e => {
@@ -63,7 +63,7 @@ export default function Register(props) {
     };
 
     const register = () => {
-        setUser({ account: '', password: '', email: '' });
+        setUser({ account: '', password: '', email: '', name: '' });
         props.history.push('/login');
     }
 
@@ -120,6 +120,31 @@ export default function Register(props) {
                         margin="normal"
                         value={user.email}
                         onChange={change('email')}
+                        autoComplete="off"
+                    />
+                    </div>
+                </div>
+                <div className="login-subinput">
+                    <div className="login-box"><span style={{ color: '#ffffff' }}>請輸入姓名</span></div>
+                    <div className="login-box">
+                    <CssTextField
+                        id="name"
+                        label="姓名"
+                        InputLabelProps={{
+                            classes: {
+                              root: classes.label,
+                              focused: classes.focused,
+                            },
+                        }}
+                        InputProps={{
+                            root: classes.outlinedInput,
+                            focused: classes.focused,
+                            className: classes.textField
+                        }}
+                        value={user.name}
+                        variant="outlined"
+                        margin="normal"
+                        onChange={change('name')}
                         autoComplete="off"
                     />
                     </div>

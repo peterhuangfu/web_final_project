@@ -79,28 +79,31 @@ export default function Login(props) {
 
         await getUserFromDb();
         userFromDB.forEach(dat =>{
-            if (dat.account === user.account){
+            if (dat.account === user.account) {
                 registered = true;
-                if (dat.password === user.password)
+                if (dat.password === user.password) {
                     passwordRight = true;
+                    localStorage.setItem('name', 'dat.name');
+                }
             }
         })
 
         if (registered === false) {
-            alert("this account is not registered")
+            alert("this account is not registered");
         }
-        else{
+        else {
             if (passwordRight === false)
-                alert("wrong password")
-            else{
-                alert("log in success")
+                alert("wrong password");
+            else {
+                alert("log in success");
                 successLogIn = true;
             }
         }
         
         userFromDB = [];
-        setUser({ account: '', password: '' });
-        props.login();
+        await setUser({ account: '', password: '' });
+        if(passwordRight)
+            props.login();
         //console.log(userFromDB[0].account)
         //console.log(userFromDB[0].account);
         // axios.post("http://localhost:3002/api/putUser", {

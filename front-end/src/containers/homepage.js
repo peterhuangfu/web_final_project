@@ -32,7 +32,8 @@ import '../styles/drawer.css';
 export default class Homepage extends Component {
     constructor(props) {
         super(props);
-        this.state = { open: false, fabOpen: false };
+        const username = localStorage.getItem('name');
+        this.state = { open: false, fabOpen: false, user: username };
     }
 
     toggleDrawer = open => event => {
@@ -131,7 +132,7 @@ export default class Homepage extends Component {
                                     className="fab_button"><PersonIcon />
                                 </Fab>
                                 <Dialog className="fab-dialog" open={this.state.fabOpen} onClose={this.handleClose}>
-                                    <DialogTitle id="fab-menu">您好，皇甫立翔！</DialogTitle>
+                                    <DialogTitle id="fab-menu">您好，{this.state.user}！</DialogTitle>
                                     <DialogActions>
                                         <Button onClick={this.handleClose} color="primary">取消</Button>
                                         <Button onClick={this.props.logout} color="primary">登出</Button>
