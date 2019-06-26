@@ -19,21 +19,22 @@ const router = express.Router();
 const dbRoute = "mongodb+srv://oomtball:123@webfinal-rwgwr.mongodb.net/test?retryWrites=true&w=majority";
 
 // connects our back end code with the database
+//const conn = mongoose.createConnection(dbRoute);
 mongoose.connect(
   dbRoute,
   { useNewUrlParser: true }
 );
 
-let db = mongoose.connection;
+let conn = mongoose.connection;
 let gfs;
-db.once("open", () => {
+conn.once("open", () => {
   console.log("connected to the database")
   // gfs = Grid(db.db, mongoose.mongo);  
   // gfs.collection('uploads');
 });
 
 // checks if connection with the database is successful
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
+conn.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
@@ -88,8 +89,8 @@ router.get("/getUser", (req, res) => {
   });
 });
 //get all file
-router.get("/getFile", (req, res) => {
-  File.find((err, data) => {
+router.get("/getFile/:id", (req, res) => {
+  File.findOne({id}, (err, data) => {
     //console.log(req.body);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
