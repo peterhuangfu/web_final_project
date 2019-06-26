@@ -99,7 +99,7 @@ router.get("/getFile", (req, res) => {
 });
 // get one file
 router.get("/getFile/:id", (req, res) => {
-  File.findOne(req.params.id, (err, data) => {
+  File.findOne({_id: req.params.id}, (err, data) => {
     //console.log(req.body);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
