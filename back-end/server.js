@@ -19,7 +19,7 @@ app.use(cors());
 const router = express.Router();
 
 // this is our MongoDB database
-const dbRoute = "mongodb+srv://oomtball:123@webfinal-rwgwr.mongodb.net/test?retryWrites=true&w=majority";
+const dbRoute = "mongodb+srv://oomtball:123@webfinal-rwgwr.mongodb.net/test";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -27,13 +27,13 @@ app.use(methodOverride('_method'))
 app.use(logger("dev"));
 app.set('view engine', 'ejs')
 // connects our back end code with the database
-const conn = mongoose.createConnection(dbRoute);
-// mongoose.connect(
-//   dbRoute,
-//   { useNewUrlParser: true }
-// );
+//const conn = mongoose.createConnection(dbRoute);
+mongoose.connect(
+  dbRoute,
+  { useNewUrlParser: true }
+);
 
-//let conn = mongoose.connection;
+let conn = mongoose.connection;
 let gfs;
 conn.once("open", () => {
   console.log("connected to the database")
