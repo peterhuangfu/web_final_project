@@ -5,7 +5,7 @@ import '../styles/profile.css';
 export default class Profile extends Component {
     constructor(props) {
         super(props);
-        this.state = { id: '', content: '', img_source: '', password: '' };
+        this.state = { id: '', content: '', img_source: '' };
     }
 
     componentDidMount() {
