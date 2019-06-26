@@ -5,6 +5,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import '../styles/mymusic.css';
 
 export default class Mymusic extends Component {
     constructor(props) {
@@ -21,21 +22,21 @@ export default class Mymusic extends Component {
         ] };
     }
     componentDidMount() {
-        // this.getArticleID();
+        // this.getAllMusic();
         window.scrollTo(0,0);
     }
 
-    // getArticleID = async () => {
-    //     await fetch('http://localhost:3001/api/getArticle')
-    //     .then(res => { return res.json() })
-    //     .then(originData => {
-    //         if(originData.success)
-    //             this.setState(() => ({ data: originData.data }));
-    //         else
-    //             alert('Fail.');
-    //     })
-    //     .catch((err) => console.error(err));
-    // }
+    getAllMusic = async () => {
+        await fetch('http://localhost:3002/api/getArticle')
+        .then(res => { return res.json() })
+        .then(originData => {
+            if(originData.success)
+                this.setState(() => ({ data: originData.data }));
+            else
+                alert('Fail.');
+        })
+        .catch((err) => console.error(err));
+    }
 
     // checkPass = async () => {
     //     await fetch('http://localhost:3001/api/getPassword')
@@ -54,13 +55,6 @@ export default class Mymusic extends Component {
     //     this.setState({ password: '' });
     // }
 
-    // passInput = e => {
-    //     if(e.key === 'Enter') 
-    //         this.checkPass();
-    //     else
-    //         this.setState({ password: e.target.value });
-    // }
-
     render() {
         const style = { float: 'right', color: '#ffffff' };
         const list = this.state.data.map((e, i) => (
@@ -71,28 +65,27 @@ export default class Mymusic extends Component {
         ));
         return list.length ? (
             <div>
-                
                 <GridList cellHeight={180} className="grid-list">
                     {this.state.data.map((data, i) => (
-                    <GridListTile key={i} style={{ width: '25vw', height: '40vh', padding: '1em'}}>
-                        <NavLink to={"/mymusic/" + data.id}>
-                            <img src={data.img} alt={data.title} style={{ maxWidth: '25vw', maxHeight: '40vh' }}/>
-                            <GridListTileBar
-                            title={data.title}
-                            subtitle={<span>by {data.author}</span>}
-                            actionIcon={
-                                <IconButton aria-label={`info about ${data.title}`} style={{ color: 'rgba(255, 255, 255, 0.54)' }}>
-                                    <InfoIcon />
-                                </IconButton>
-                            }
-                            />
-                        </NavLink>
+                    <GridListTile key={i} style={{ width: '25vw', height: '40vh', padding: '1em' }}>
+                        <div className="hover-screen">
+                            <NavLink to={"/mymusic/" + data.id}>
+                                <img src={data.img} alt={data.title} style={{ maxWidth: '25vw', height: '75%' }}/>
+                                <GridListTileBar
+                                style={{ height: '25%' }}
+                                title={data.title}
+                                subtitle={<span>by {data.author}</span>}
+                                actionIcon={
+                                    <IconButton aria-label={`info about ${data.title}`} style={{ color: 'rgba(255, 255, 255, 0.54)' }}>
+                                        <InfoIcon />
+                                    </IconButton>
+                                }
+                                />
+                            </NavLink>
+                        </div>
                     </GridListTile>
                     ))}
                 </GridList>
-                
-                {/* <button className="newPostButton" onClick={this.handleClickOpen}><b>上傳</b></button>
-                <div className="article-list-container">{list}</div> */}
             </div>
         ) : (
             <div>

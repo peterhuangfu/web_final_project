@@ -1,5 +1,4 @@
-.article {
-    background-color: rgb(233, 233, 233);
+.post {
     margin: 10px;
     min-width: 60vw;
     min-height: 50vh;
@@ -9,14 +8,14 @@
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.article-title {
+.post-title {
     text-align: center;
     font-size: calc(15px + 2vmin);
     margin-bottom: 10px;
     color: #ffffff;
 }
 
-.article-main {
+.post-main {
     margin-top: 0.7em;
     display: flex;
     flex-direction: row;
@@ -24,14 +23,14 @@
     justify-content: flex-start;
 }
 
-.article-img {
+.post-img {
     /* width: 50vw;
     height: 55vh; */
     width: 40%;
     height: 40%;
 }
 
-.article-text {
+.post-text {
     margin-left: 2vw;
     color: #ffffff;
 }

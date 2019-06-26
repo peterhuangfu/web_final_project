@@ -35,6 +35,52 @@
     padding-top: 3vh;
 }
 
+.convertion-input-container {
+    width: 100%;
+    height: auto;
+    /* border: 2px transparent;
+    padding: 1em; */
+    background-color: transparent;
+    margin-top: 3vh;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.input-subcontainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.convertion-input-title {
+    width: 25%;
+    height: 7vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 0.6em;
+    color: #ffffff;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    border: 1px transparent;
+    font-size: 20px;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+.convertion-input-content {
+    width: 25%;
+    height: 30vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 0.6em;
+    color: #ffffff;
+    margin-top: 2vh;
+    margin-bottom: 3vh;
+    border: 1px transparent;
+    font-size: 20px;
+    padding: 1vw;
+}
+
 .convertion-description {
     color: #ffffff;
     font-size: 20px;
@@ -42,7 +88,7 @@
 
 .upload-button {
     color: white;
-    width: 25%;
+    width: 26.5%;
     height: 55vh;
     background-color: rgb(78, 78, 78);
     border-radius: 0.4em 0.4em 0.4em 0.4em;
@@ -59,7 +105,7 @@
 .newPostButton {
     float: right;
     color: white;
-    width: 4.5vw;
+    width: 5vw;
     height: 5vh;
     line-height: 4.5vh;
     background-color: rgb(78, 78, 78);
@@ -68,6 +114,11 @@
     font-size: 18px;
     cursor: pointer;
     text-decoration: none;
+}
+
+.newPostButton:hover {
+    background-color: #ffffff;
+    color: black;
 }
 
 .spinning {

@@ -76,6 +76,7 @@
 .homepage-section {
     padding-top: 13vh;
     min-height: 80vh;
+    z-index: 1;
 }
 
 .homepage-footer {
@@ -86,48 +87,4 @@
     min-height: 10vh;
     margin-top: 4vh;
     color: white;
-}
-
-.grid-list {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: stretch;
-    justify-content: flex-start space-around;
-    overflow: hidden;
-}
-
-.newPostButton {
-    float: right;
-    color: white;
-    width: 4.5vw;
-    height: 5vh;
-    line-height: 4.5vh;
-    background-color: rgb(78, 78, 78);
-    margin-right: 19px;
-    border-radius: 0.4em 0.4em 0.4em 0.4em;
-    font-size: 18px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.newPostButton:hover {
-    background-color: #ffffff;
-    color: black;
-}
-
-.music-list-container {
-    padding-top: 6.5vh;
-}
-
-.music-item {
-    width: 85%;
-    margin-left: 5%;
-    padding: 1.5em;
-    margin-top: 1%;
-    margin-bottom: 1%;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.music-item:hover {
-    background-color: rgba(90, 90, 90, 0.5);
 }
