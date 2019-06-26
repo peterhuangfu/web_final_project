@@ -4,8 +4,13 @@ const Schema = mongoose.Schema;
 // this will be our data base's data structure 
 const DataSchema = new Schema(
   { 
+    name: String,
     account: String,
     password: String,  
+    email: String,
+    content: String,
+    img_source: String
+
   }
 );
 

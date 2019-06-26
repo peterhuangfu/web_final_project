@@ -22,10 +22,10 @@ const router = express.Router();
 // this is our MongoDB database
 const dbRoute = "mongodb://oomtball:123@webfinal-shard-00-00-rwgwr.mongodb.net:27017,webfinal-shard-00-01-rwgwr.mongodb.net:27017,webfinal-shard-00-02-rwgwr.mongodb.net:27017/test?ssl=true&replicaSet=webFinal-shard-0&authSource=admin&retryWrites=true&w=majority";
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(methodOverride('_method'))
-app.use(logger("dev"));
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
+router.use(methodOverride('_method'))
+router.use(logger("dev"));
 app.set('view engine', 'ejs')
 // connects our back end code with the database
 //const conn = mongoose.createConnection(dbRoute);
@@ -34,7 +34,6 @@ mongoose.connect(
   { useNewUrlParser: true }
 );
 
-let temp;
 let conn = mongoose.connection;
 let gfs;
 conn.once("open", () => {
@@ -83,7 +82,29 @@ router.get('/', (req, res) => {
   res.render('index');
 })
 
+router.post('/register', (req, res) => {
+  let data = new User();
+
+  const { name, account, password, email } = req.body;
+
+  if (!account || !name || !password || !email) {
+    return res.json({
+      success: false,
+      error: "INVALID INPUTS"
+    });
+  }
+  data.name = name;
+  data.account = account;
+  data.password = password;
+  data.email = email;
+  data.save(err => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
 router.post('/upload', upload.single('file'),(req, res) => {
+  // res.json({file: req.file});
   return res.json({ success: true, file: req.file});
 });
 
@@ -96,6 +117,15 @@ router.get("/getUser", (req, res) => {
     return res.json({ success: true, data: data });
   });
 });
+
+router.get("/getProfile/:user", (req, res) => {
+  console.log(req);
+  User.findOne({name: req.params.user}, (err, data) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+
 //get all file
 router.get("/getFile", (req, res) => {
   File.find((err, data) => {
@@ -126,7 +156,7 @@ router.get("/getFile/:id", (req, res) => {
 // })
 
 // this is our update method
-router.post("/updateUser", (req, res) => {
+router.post("/updateProfile", (req, res) => {
   const { user, update } = req.body;
   User.findOneAndUpdate({user}, update, err => {
     if (err) return res.json({ success: false, error: err });

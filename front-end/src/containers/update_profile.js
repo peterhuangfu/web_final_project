@@ -17,7 +17,7 @@ export default class UpdateProfile extends Component {
         .then(res => { return res.json() })
         .then(originData => {
             if(originData.success) {
-                this.setState(() => ({ name: user, content: originData.data[0].content, img_source: originData.data[0].img_source }));
+                this.setState(() => ({ name: user, content: originData.data.content, img_source: originData.data.img_source }));
             }
             else
                 alert('Fail.');

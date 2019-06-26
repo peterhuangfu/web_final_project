@@ -15,8 +15,9 @@ export default class Profile extends Component {
         fetch(url)
         .then(res => { return res.json() })
         .then(originData => {
+            //console.log(originData.data.content);
             if(originData.success) {
-                this.setState(() => ({ content: originData.data[0].content, img_source: originData.data[0].img_source }));
+                this.setState(() => ({ content: originData.data.content, img_source: originData.data.img_source }));
             }
             else
                 alert('Fail.');

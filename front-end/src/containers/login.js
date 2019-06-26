@@ -81,7 +81,7 @@ export default function Login(props) {
                 registered = true;
                 if (dat.password === user.password) {
                     passwordRight = true;
-                    localStorage.setItem('name', 'dat.name');
+                    localStorage.setItem('name', dat.name);
                 }
             }
         })
