@@ -3,9 +3,11 @@ const express = require("express");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-let multer = require('multer');
-let GridFsStorage = require('multer-gridfs-storage');
-let Grid = require('gridfs-stream');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');
+
 Grid.mongo = mongoose.mongo;
 const User = require("./user")
 const File = require("./file")
@@ -21,15 +23,17 @@ const dbRoute = "mongodb+srv://oomtball:123@webfinal-rwgwr.mongodb.net/test?retr
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'))
 app.use(logger("dev"));
+app.set('view engine', 'ejs')
 // connects our back end code with the database
-//const conn = mongoose.createConnection(dbRoute);
-mongoose.connect(
-  dbRoute,
-  { useNewUrlParser: true }
-);
+const conn = mongoose.createConnection(dbRoute);
+// mongoose.connect(
+//   dbRoute,
+//   { useNewUrlParser: true }
+// );
 
-let conn = mongoose.connection;
+//let conn = mongoose.connection;
 let gfs;
 conn.once("open", () => {
   console.log("connected to the database")
@@ -43,38 +47,36 @@ conn.on("error", console.error.bind(console, "MongoDB connection error:"));
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-  cb(null, 'public')
-},
-  filename: function (req, file, cb) {
-  cb(null, Date.now() + '-' +file.originalname )
-}
-})
+// var storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//   cb(null, 'public')
+// },
+//   filename: function (req, file, cb) {
+//   cb(null, Date.now() + '-' +file.originalname )
+// }
+// })
 
-// const storage = new GridFsStorage({
-//   url: dbRoute,
-//   file: (req, file) => {
-//     return new Promise((resolve, reject) => {
-//         const filename = file.originalname;
-//         const fileInfo = {
-//           filename: filename,
-//           bucketName: 'uploads'
-//         };
-//         resolve(fileInfo);
-//     });
-//   }
-// });
-var upload = multer({ storage: storage })
+const storage = new GridFsStorage({
+  url: dbRoute,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.ramdonBytes(16, (err, buf) => {
+        if (err){
+          return reject(err);
+        }
+        const filename = buf.toSring('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      })
+    })
+  }
+});
+var upload = multer({ storage })
 router.post('/uploadFile', upload.single('file'),(req, res) => {
-    //console.log(req.body);
-  // upload(req, res, function (err) {
-  //        if (err instanceof multer.MulterError) {
-  //            return res.status(500).json(err)
-  //        } else if (err) {
-  //            return res.status(500).json(err)
-  //        }
-  //   return res.status(200).send(req.file)
+  console.log(upload);
   	return res.json({ success: true });
   // })
 
