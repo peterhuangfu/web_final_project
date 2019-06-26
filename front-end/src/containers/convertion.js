@@ -34,7 +34,6 @@ export default class Convertion extends Component {
 
         let data = new FormData();
         let uploader = localStorage.getItem('name');
-<<<<<<< HEAD
         data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader);
         // data.append('file', this.state.files[0]);
         // data.append('name', this.state.files[0].name);
@@ -44,11 +43,6 @@ export default class Convertion extends Component {
         console.log(data.get('file'));
         console.log(data.get('name'));
         await fetch('http://localhost:3002/api/upload', {
-=======
-        data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader, this.state.lastID+1);
-        
-        await fetch('http://localhost:3002/api/uploadFile', {
->>>>>>> 84b2cb3c806a44e5db5deb6bbaae5d64dfb9f2ad
             method: 'POST',
             body: data,
         })
@@ -61,14 +55,10 @@ export default class Convertion extends Component {
                 setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
             }
         })
-<<<<<<< HEAD
-        .catch((err) => console.error(err))
-=======
         .catch((err) => {
             console.error(err);
             setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
         });
->>>>>>> 84b2cb3c806a44e5db5deb6bbaae5d64dfb9f2ad
     };
 
     render() {
