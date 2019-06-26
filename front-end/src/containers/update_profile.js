@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import '../styles/profile.css';
 
 export default class UpdateProfile extends Component {
     constructor(props) {
@@ -51,15 +52,32 @@ export default class UpdateProfile extends Component {
     render() {
         return (
             <div className="edit_profile">
-                <div className="profile-title" style={{textAlign: 'center'}}><b>編輯個人資訊</b></div>
-                <div className="edit-profile_block">
-                    <textarea type="text" className="profile-content_block" onChange={e => this.setState({ content: e.target.value })} placeholder="內容" name="content" value={this.state.content}/>
-                    <textarea type="text" className="profile-img_block" onChange={e => this.setState({ img_source: e.target.value })} placeholder="圖片連結" name="img_source" value={this.state.img_source}/>
+                <div className="edit-profile-title"><b>編輯個人資訊</b></div>
+                <div className="edit-profile-block">
+                    <textarea
+                    type="text"
+                    className="profile-content-block"
+                    onChange={e => this.setState({ content: e.target.value })}
+                    placeholder="輸入內容"
+                    name="profile_content"
+                    value={this.state.content}
+                    autoComplete="off"
+                    autoFocus={false} />
+
+                    <textarea 
+                    type="text" 
+                    className="profile-img-block" 
+                    onChange={e => this.setState({ img_source: e.target.value })} 
+                    placeholder="圖片連結" 
+                    name="img_source" 
+                    value={this.state.img_source} 
+                    autoComplete="off"
+                    autoFocus={false} />
                 </div>
                 <div className="edit-profile_button-container">
-                    <div className="edit-profile_button-subcontainer"><button className="edit-profile_button" onClick={this.update}><b>確認</b></button></div>
-                    <div className="edit-profile_button-subcontainer"><button className="edit-profile_button" onClick={this.clear}><b>清空</b></button></div>
-                    <div className="edit-profile_button-subcontainer"><button className="edit-profile_button" onClick={this.goBack}><b>返回</b></button></div>
+                    <button className="edit-profile_button" onClick={this.update}><b>確認</b></button>
+                    <button className="edit-profile_button" onClick={this.clear}><b>清空</b></button>
+                    <button className="edit-profile_button" style={{ width: '7vw' }} onClick={this.goBack}><b>上一頁</b></button>
                 </div>
             </div>
         );

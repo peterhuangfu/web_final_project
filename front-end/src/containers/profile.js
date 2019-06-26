@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import '../styles/profile.css';
 
 export default class Profile extends Component {
     constructor(props) {
         super(props);
-        this.state = { id: '', content: '', img_source: '', open: false, password: '' };
+        this.state = { id: '', content: '', img_source: '', password: '' };
     }
 
     componentDidMount() {
@@ -21,12 +22,8 @@ export default class Profile extends Component {
         window.scrollTo(0,0);
     }
 
-    handleClickOpen = () => {
+    editProfile = () => {
         this.setState({ open: true });
-    };
-    
-    handleClose = () => {
-        this.setState({ open: false });
     };
 
     render() {
@@ -34,7 +31,7 @@ export default class Profile extends Component {
             <div className="profile">
                 <div className="profile-title">
                     <b>個人資訊</b>
-                    <button className="newPostButton" onClick={this.handleClickOpen}><b>編輯</b></button>
+                    <NavLink to="/updateprofile" className="edit-profile-link"><button className="newPostButton" onClick={this.editProfile}><b>編輯</b></button></NavLink>
                 </div>
                 <hr />
                 <div className="profile-container">
@@ -43,7 +40,7 @@ export default class Profile extends Component {
                 </div>
                 <div style={{ minHeight: '10vh' }}></div>
                 <div className="profile-title">
-                    <b>轉譜紀錄</b>
+                    <b>上傳紀錄</b>
                 </div>
                 <hr />
                 <div className="profile-container">
