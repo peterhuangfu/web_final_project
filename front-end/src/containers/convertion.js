@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UploadIcon from '@material-ui/icons/CloudUpload';
-import TextField from '@material-ui/core/TextField';
 import '../styles/convertion.css';
 
 export default class Convertion extends Component {

@@ -10,7 +10,8 @@ export default class MymusicDetail extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        let url = 'http://localhost:3002/api/getFile' + id;
+        let url = 'http://localhost:3002/api/getFile/' + id;
+        console.log(url);
         fetch(url)
         .then(res => { return res.json() })
         .then(originData => {
