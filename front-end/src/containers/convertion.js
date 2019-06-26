@@ -6,7 +6,7 @@ import '../styles/convertion.css';
 export default class Convertion extends Component {
     constructor(props) {
         super(props);
-        this.state = { upload: 'notyet', files: null, waiting: false, fileTitle: '', fileContent: '' };
+        this.state = { upload: 'notyet', files: null, waiting: false, fileTitle: '', fileContent: '', lastID: '0' };
     }
 
     componentDidMount() {
@@ -26,9 +26,15 @@ export default class Convertion extends Component {
 
     putFileInDB = async () => {
         await this.setState({ waiting: true });
+        await fetch('http://localhost:3002/api/getFile')
+        .then(res => { return res.json() })
+        .then(res => {
+            this.setState({ lastID: res.data.length });
+        })
 
         let data = new FormData();
         let uploader = localStorage.getItem('name');
+<<<<<<< HEAD
         data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader);
         // data.append('file', this.state.files[0]);
         // data.append('name', this.state.files[0].name);
@@ -38,6 +44,11 @@ export default class Convertion extends Component {
         console.log(data.get('file'));
         console.log(data.get('name'));
         await fetch('http://localhost:3002/api/upload', {
+=======
+        data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader, this.state.lastID+1);
+        
+        await fetch('http://localhost:3002/api/uploadFile', {
+>>>>>>> 84b2cb3c806a44e5db5deb6bbaae5d64dfb9f2ad
             method: 'POST',
             body: data,
         })
@@ -45,10 +56,19 @@ export default class Convertion extends Component {
         .then(res => {
             if(res.success)
                 setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
-            else
+            else {
+                alert('Fail.');
                 setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+            }
         })
+<<<<<<< HEAD
         .catch((err) => console.error(err))
+=======
+        .catch((err) => {
+            console.error(err);
+            setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+        });
+>>>>>>> 84b2cb3c806a44e5db5deb6bbaae5d64dfb9f2ad
     };
 
     render() {
@@ -65,38 +85,27 @@ export default class Convertion extends Component {
                         </button>
                     </div>
                     <div className="convertion-input-container">
-                        {/* <div className="input-subcontainer">
-                            <div className="convertion-input-title">
-                                <input 
-                                id="title"
-                                placeholder="文件標題"
-                                type="text"
-                                value={this.state.fileTitle}
-                                onChange={this.edit('title')}
-                                autoComplete="off" />
-                            </div>
-                        </div> */}
                         <div className="input-subcontainer">
                             <input
                             className="convertion-input-title"
                             id="title"
-                            placeholder="文件標題"
+                            placeholder="檔案標題"
                             type="text"
                             value={this.state.fileTitle}
                             onChange={this.edit('title')}
                             autoComplete="off"
-                            autoFocus="false" />
+                            autoFocus={false} />
                         </div>
                         <div className="input-subcontainer">
                             <textarea
                             className="convertion-input-content"
                             id="content"
-                            placeholder="文件內容"
+                            placeholder="檔案內容"
                             type="text"
                             value={this.state.fileContent}
                             onChange={this.edit('content')}
                             autoComplete="off"
-                            autoFocus="false" />
+                            autoFocus={false} />
                         </div>
                     </div>
                     <div className="convertion-actions">

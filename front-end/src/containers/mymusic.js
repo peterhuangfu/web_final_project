@@ -21,8 +21,10 @@ export default class Mymusic extends Component {
         await fetch('http://localhost:3002/api/getFile')
         .then(res => { return res.json() })
         .then(originData => {
-            if(originData.success)
+            if(originData.success) {
+                originData.data.reverse();
                 this.setState(() => ({ data: originData.data }));
+            }
             else
                 alert('Fail.');
         })

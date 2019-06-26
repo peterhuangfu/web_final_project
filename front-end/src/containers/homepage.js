@@ -26,6 +26,7 @@ import Mymusic from './mymusic';
 import MymusicDetail from './mymusic_detail';
 import Home from './home';
 import Profile from './profile';
+import UpdateProfile from './update_profile';
 import '../styles/homepage.css';
 import '../styles/drawer.css';
 
@@ -134,8 +135,10 @@ export default class Homepage extends Component {
                                 <Dialog className="fab-dialog" open={this.state.fabOpen} onClose={this.handleClose}>
                                     <DialogTitle id="fab-menu">哈囉，{this.state.user}</DialogTitle>
                                     <DialogActions>
-                                        <Button onClick={this.handleClose} color="primary">取消</Button>
-                                        <Button onClick={this.props.logout} color="primary">登出</Button>
+                                        <div className="personal-actions">
+                                          <Button onClick={this.handleClose} color="primary">取消</Button>
+                                          <Button onClick={this.props.logout} color="primary">登出</Button>
+                                        </div>
                                     </DialogActions>
                                 </Dialog>
                             </div>
@@ -148,6 +151,7 @@ export default class Homepage extends Component {
                             <Route path="/mymusic/:id?" component={MymusicDetail} />
                             <Route path="/convertion" component={Convertion} />
                             <Route path="/profile" component={Profile} />
+                            <Route path="/updateprofile" component={UpdateProfile} />
                             <Route path="/" component={Home} />
                             <Route path="/home" component={Home} />
                         </Switch>

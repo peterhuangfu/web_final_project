@@ -8,7 +8,11 @@
     padding: 1.5em;
     margin-top: 1%;
     margin-bottom: 1%;
+    border-radius: 0.4em 0.4em 0.4em 0.4em;
     background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .music-item:hover {
@@ -16,6 +20,15 @@
 }
 
 .item-title {
-    font-size: 16px;
-    margin: 4px;
+    color: #ffffff;
+    font-size: 24px;
+    /* margin: 3px; */
+}
+
+.item-title-link {
+    text-decoration: none;
+}
+
+.download-button {
+    margin-left: 50vw;
 }

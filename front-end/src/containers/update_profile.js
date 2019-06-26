@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import '../styles/profile.css';
+import '../styles/convertion.css';
 
 export default class UpdateProfile extends Component {
     constructor(props) {
         super(props);
-        this.state = { id: '', content: '', img_source: '' };
+        this.state = { id: '1', content: '', img_source: '', waiting: false };
     }
     componentDidMount() {
         window.scrollTo(0,0);
-        fetch('http://localhost:3001/api/getProfile')
+        fetch('http://localhost:3002/api/getProfile')
         .then(res => { return res.json() })
         .then(originData => {
             if(originData.success) {
@@ -20,8 +23,10 @@ export default class UpdateProfile extends Component {
     }
 
     update = async () => {
-        let data = { id: '0', update: { content: this.state.content, img_source: this.state.img_source } };
-        await fetch('http://localhost:3001/api/updateProfile', {
+        await this.setState({ waiting: true });
+
+        let data = { id: this.state.id, update: { content: this.state.content, img_source: this.state.img_source } };
+        await fetch('http://localhost:3002/api/updateProfile', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -31,17 +36,30 @@ export default class UpdateProfile extends Component {
         .then(res => { return res.json() })
         .then(res => {
             if(res.success)
-                console.log(res);
-            else
-                alert('Fail.');
+                setTimeout(() => {
+                    this.setState({ waiting: false });
+                    this.props.history.push('/profile');
+                }, 1500);
+            else {
+                setTimeout(() => {
+                    this.setState({ waiting: false });
+                    alert('Fail.');
+                    this.props.history.push('/profile');
+                }, 1500);
+            }
         })
-        .catch((err) => console.error(err));
-        this.clear();
-        this.props.history.push('/profile');
+        .catch((err) => {
+            console.error(err);
+            setTimeout(() => {
+                this.setState({ waiting: false });
+                alert('Fail.');
+            }, 1500);
+        });
+        // this.props.history.push('/profile');
     }
 
     clear = () => {
-        this.setState(() => ({ content: '', img_source: '' }));
+        this.setState({ content: '', img_source: '', waiting: false });
     }
 
     goBack = () => {
@@ -49,19 +67,39 @@ export default class UpdateProfile extends Component {
     }
 
     render() {
-        return (
+        return this.state.id ? (
             <div className="edit_profile">
-                <div className="profile-title" style={{textAlign: 'center'}}><b>編輯個人資訊</b></div>
-                <div className="edit-profile_block">
-                    <textarea type="text" className="profile-content_block" onChange={e => this.setState({ content: e.target.value })} placeholder="內容" name="content" value={this.state.content}/>
-                    <textarea type="text" className="profile-img_block" onChange={e => this.setState({ img_source: e.target.value })} placeholder="圖片連結" name="img_source" value={this.state.img_source}/>
+                <div className="edit-profile-title"><b>編輯個人資訊</b></div>
+                <div className="edit-profile-block">
+                    <textarea
+                    type="text"
+                    className="profile-content-block"
+                    onChange={e => this.setState({ content: e.target.value })}
+                    placeholder="輸入內容"
+                    name="profile_content"
+                    value={this.state.content}
+                    autoComplete="off"
+                    autoFocus={false} />
+
+                    <textarea 
+                    type="text" 
+                    className="profile-img-block" 
+                    onChange={e => this.setState({ img_source: e.target.value })} 
+                    placeholder="圖片連結" 
+                    name="img_source" 
+                    value={this.state.img_source} 
+                    autoComplete="off"
+                    autoFocus={false} />
                 </div>
                 <div className="edit-profile_button-container">
-                    <div className="edit-profile_button-subcontainer"><button className="edit-profile_button" onClick={this.update}><b>確認</b></button></div>
-                    <div className="edit-profile_button-subcontainer"><button className="edit-profile_button" onClick={this.clear}><b>清空</b></button></div>
-                    <div className="edit-profile_button-subcontainer"><button className="edit-profile_button" onClick={this.goBack}><b>返回</b></button></div>
+                    <button className="edit-profile_button" onClick={this.update}><b>確認</b></button>
+                    <button className="edit-profile_button" onClick={this.clear}><b>清空</b></button>
+                    <button className="edit-profile_button" style={{ width: '7vw' }} onClick={this.goBack}><b>上一頁</b></button>
                 </div>
+                {this.state.waiting ? <div className="spinning"><CircularProgress size={80} thickness={5} /></div> : null}
             </div>
+        ) : (
+            <div></div>
         );
     }
 }
