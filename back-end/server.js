@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 var cors = require("cors");
+const crypto = require("crypto");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const multer = require('multer');
@@ -58,23 +59,23 @@ conn.on("error", console.error.bind(console, "MongoDB connection error:"));
 // })
 
 const storage = new GridFsStorage({
-  url: dbRoute,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.ramdonBytes(16, (err, buf) => {
-        if (err){
-          return reject(err);
-        }
-        //const filename = buf.toSring('hex') + path.extname(file.originalname);
-        const filename = abc;
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      })
-    })
-  }
+   url: dbRoute,
+  // file: (req, file) => {
+  //   return new Promise((resolve, reject) => {
+  //     crypto.ramdonBytes(16, (err, buf) => {
+  //       if (err){
+  //         return reject(err);
+  //       }
+  //       //const filename = buf.toSring('hex') + path.extname(file.originalname);
+  //       const filename = abc;
+  //       const fileInfo = {
+  //         filename: filename,
+  //         bucketName: 'uploads'
+  //       };
+  //       resolve(fileInfo);
+  //     })
+  //   })
+  // }
 });
 var upload = multer({ storage })
 
@@ -96,33 +97,33 @@ router.get("/getUser", (req, res) => {
   });
 });
 //get all file
-// router.get("/getFile", (req, res) => {
-//   File.find((err, data) => {
-//     //console.log(req.body);
-//     if (err) return res.json({ success: false, error: err });
-//     return res.json({ success: true, data: data });
-//   });
-// });
-// get one file
-// router.get("/getFile/:id", (req, res) => {
-//   File.findOne({file_id: req.params.id}, (err, data) => {
-//     //console.log(req.body);
-//     if (err) return res.json({ success: false, error: err });
-//     return res.json({ success: true, data: data });
-//   });
-// });
+router.get("/getFile", (req, res) => {
+  File.find((err, data) => {
+    //console.log(req.body);
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+//get one file
+router.get("/getFile/:id", (req, res) => {
+  File.findOne({file_id: req.params.id}, (err, data) => {
+    //console.log(req.body);
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
 
 
 
-router.get("/getFile/:filename", (req, res) => {
-  gfs.files.findOne({filename: req.params.filename}, (err, file => {
-    if (!file || file.length === 0){
-      return res.status(404).json({
-        err:  'No files exist'
-      })
-    }
-  }))
-})
+// router.get("/getFile/:filename", (req, res) => {
+//   gfs.files.findOne({filename: req.params.filename}, (err, file => {
+//     if (!file || file.length === 0){
+//       return res.status(404).json({
+//         err:  'No files exist'
+//       })
+//     }
+//   }))
+// })
 
 // this is our update method
 router.post("/updateUser", (req, res) => {
