@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import Button from '@material-ui/core/Button';
 import '../styles/download.css';
 
 export default class Download extends Component {
@@ -29,8 +30,9 @@ export default class Download extends Component {
     render() { 
         const list = this.state.data.map((e, i) => (
             <div key={i} className="music-item">
-                <span>&nbsp;&nbsp;</span><NavLink to={"/mymusic/" + e.file_id} className="item-title-link"><span className="item-title">{e.file_title}</span></NavLink>
-                <span style={{ float: 'right', color: '#ffffff', marginTop: '3px' }}>上傳時間：{e.upload_time.substr(0, 11)}</span>
+                <div><span>&nbsp;&nbsp;</span><NavLink to={"/mymusic/" + e.file_id} className="item-title-link"><span className="item-title">{e.file_title}</span></NavLink></div>
+                <div className="download-button"><Button variant="contained" color="primary">下載</Button></div>
+                <div><span style={{ color: '#ffffff' }}>上傳時間：{e.upload_time.substr(0, 11)}</span></div>
             </div>
         ));
         return (

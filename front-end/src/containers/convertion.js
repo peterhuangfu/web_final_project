@@ -62,22 +62,11 @@ export default class Convertion extends Component {
                         </button>
                     </div>
                     <div className="convertion-input-container">
-                        {/* <div className="input-subcontainer">
-                            <div className="convertion-input-title">
-                                <input 
-                                id="title"
-                                placeholder="文件標題"
-                                type="text"
-                                value={this.state.fileTitle}
-                                onChange={this.edit('title')}
-                                autoComplete="off" />
-                            </div>
-                        </div> */}
                         <div className="input-subcontainer">
                             <input
                             className="convertion-input-title"
                             id="title"
-                            placeholder="文件標題"
+                            placeholder="檔案標題"
                             type="text"
                             value={this.state.fileTitle}
                             onChange={this.edit('title')}
@@ -88,7 +77,7 @@ export default class Convertion extends Component {
                             <textarea
                             className="convertion-input-content"
                             id="content"
-                            placeholder="文件內容"
+                            placeholder="檔案內容"
                             type="text"
                             value={this.state.fileContent}
                             onChange={this.edit('content')}

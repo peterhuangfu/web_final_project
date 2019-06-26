@@ -1,10 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './index.css';
 import App from './App';
 
-ReactDOM.render(<HashRouter><App /></HashRouter>, document.getElementById('root'));
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#1273c9'
+        },
+        secondary: {
+            main: '#761c8e'
+        }
+      }
+    }
+)
+
+ReactDOM.render(
+    <MuiThemeProvider theme={theme}>
+        <HashRouter>
+            <App />
+        </HashRouter>
+    </MuiThemeProvider>
+, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -13,7 +13,7 @@ export default class Post extends Component {
                 <hr />
                 <div className="post-main">
                     <img src={this.props.source} alt="" className="post-img"></img>
-                    <div className="post-text"><span >{this.props.content}</span></div>
+                    <div className="post-text"><span>{this.props.content}</span></div>
                 </div>
             </div>
         );

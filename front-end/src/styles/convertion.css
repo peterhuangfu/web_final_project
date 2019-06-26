@@ -104,7 +104,7 @@
 
 .newPostButton {
     float: right;
-    color: white;
+    color: #ffffff;
     width: 5vw;
     height: 5vh;
     line-height: 4.5vh;
@@ -118,7 +118,7 @@
 
 .newPostButton:hover {
     background-color: #ffffff;
-    color: black;
+    color: #000000;
 }
 
 .spinning {

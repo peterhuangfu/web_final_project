@@ -1,31 +1,25 @@
 .music-detail_button-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 4vh;
+    margin-bottom: 4vh;
+    width: 100%;
     display: flex;
-    margin-left: 1.75vw;
-    align-content: flex-end;
-    justify-content: flex-start;
-}
-
-.music-detail_button-subcontainer {
-    display: flex;
-    width: auto;
+    justify-content: center;
 }
 
 .music-detail_button {
-    width: 4.5vw;
+    float: right;
+    color: #ffffff;
+    width: 7vw;
     height: 5vh;
     line-height: 4.5vh;
-    background-color: rgb(114, 115, 117);
+    background-color: rgb(78, 78, 78);
     border-radius: 0.4em 0.4em 0.4em 0.4em;
-    margin-right: 15px;
-    color: white;
-    text-decoration: none;
     font-size: 18px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .music-detail_button:hover {
-    color: black;
+    color: #000000;
     background-color: #ffffff;
 }
