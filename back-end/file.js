@@ -6,6 +6,7 @@ const DataSchema = new Schema(
   { 
     upload_time: String,
     file_title: String,  
+    file_id: String,
     file_name: String,  
     file_description: String,  
     user_name: String,  

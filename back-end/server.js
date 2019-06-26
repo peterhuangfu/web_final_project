@@ -3,7 +3,6 @@ const express = require("express");
 var cors = require("cors");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
-let conn = mongoose.connection;
 let multer = require('multer');
 let GridFsStorage = require('multer-gridfs-storage');
 let Grid = require('gridfs-stream');
@@ -26,8 +25,12 @@ mongoose.connect(
 );
 
 let db = mongoose.connection;
-let gfs = Grid(db);
-db.once("open", () => console.log("connected to the database"));
+let gfs;
+db.once("open", () => {
+  console.log("connected to the database")
+  // gfs = Grid(db.db, mongoose.mongo);  
+  // gfs.collection('uploads');
+});
 
 // checks if connection with the database is successful
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -46,6 +49,20 @@ var storage = multer.diskStorage({
   cb(null, Date.now() + '-' +file.originalname )
 }
 })
+
+// const storage = new GridFsStorage({
+//   url: dbRoute,
+//   file: (req, file) => {
+//     return new Promise((resolve, reject) => {
+//         const filename = file.originalname;
+//         const fileInfo = {
+//           filename: filename,
+//           bucketName: 'uploads'
+//         };
+//         resolve(fileInfo);
+//     });
+//   }
+// });
 var upload = multer({ storage: storage })
 router.post('/uploadFile', upload.single('file'),(req, res) => {
     //console.log(req.body);
