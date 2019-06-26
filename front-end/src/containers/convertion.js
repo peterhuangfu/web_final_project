@@ -53,7 +53,7 @@ export default class Convertion extends Component {
                         <button type="file" className="upload-button" onClick={e => this.file.click()}>
                             <UploadIcon style={{ width: '60%', height: '90%' }}/>
                             <b style={{ width: '100%', textAlign: 'center' }}>{this.state.files !== null ? this.state.files[0].name : '上傳WAV、MP3檔'}</b>
-                            <input ref={input => this.file = input} style={{ visibility: 'hidden' }} type="file" onChange={e => this.setState({ files: e.target.files })} />
+                            <input ref={input => this.file = input} style={{ visibility: 'hidden' }} type="file" name="file" onChange={e => this.setState({ files: e.target.files })} />
                         </button>
                     </div>
                     <div className="convertion-input-container">
