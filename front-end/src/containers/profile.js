@@ -9,11 +9,14 @@ export default class Profile extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3002/api/getProfile')
+        window.scrollTo(0,0);
+        let user = localStorage.getItem('name');
+        let url = 'http://localhost:3002/api/getProfile/' + user;
+        fetch(url)
         .then(res => { return res.json() })
         .then(originData => {
             if(originData.success) {
-                this.setState(() => ({ id: originData.data[0].id, content: originData.data[0].content, img_source: originData.data[0].img_source }));
+                this.setState(() => ({ content: originData.data[0].content, img_source: originData.data[0].img_source }));
             }
             else
                 alert('Fail.');
