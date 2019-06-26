@@ -10,6 +10,7 @@ Grid.mongo = mongoose.mongo;
 const User = require("./user")
 const File = require("./file")
 
+
 const API_PORT = 3002;
 const app = express();
 app.use(cors());
@@ -18,6 +19,9 @@ const router = express.Router();
 // this is our MongoDB database
 const dbRoute = "mongodb+srv://oomtball:123@webfinal-rwgwr.mongodb.net/test?retryWrites=true&w=majority";
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(logger("dev"));
 // connects our back end code with the database
 //const conn = mongoose.createConnection(dbRoute);
 mongoose.connect(
@@ -29,8 +33,8 @@ let conn = mongoose.connection;
 let gfs;
 conn.once("open", () => {
   console.log("connected to the database")
-  // gfs = Grid(db.db, mongoose.mongo);  
-  // gfs.collection('uploads');
+  gfs = Grid(conn.db, mongoose.mongo);  
+  gfs.collection('uploads');
 });
 
 // checks if connection with the database is successful
@@ -38,9 +42,6 @@ conn.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(logger("dev"));
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -89,6 +90,14 @@ router.get("/getUser", (req, res) => {
   });
 });
 //get all file
+router.get("/getFile", (req, res) => {
+  File.find((err, data) => {
+    //console.log(req.body);
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
+// get one file
 router.get("/getFile/:id", (req, res) => {
   File.findOne({id}, (err, data) => {
     //console.log(req.body);
