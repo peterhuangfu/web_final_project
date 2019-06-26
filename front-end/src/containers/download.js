@@ -16,8 +16,10 @@ export default class Download extends Component {
         await fetch('http://localhost:3002/api/getFile')
         .then(res => { return res.json() })
         .then(pdfList => {
-            if(pdfList.success)
+            if(pdfList.success){
+                pdfList.data.reverse();
                 this.setState(() => ({ data: pdfList.data }));
+            }
             else
                 alert('Fail.');
         })
@@ -27,8 +29,8 @@ export default class Download extends Component {
     render() { 
         const list = this.state.data.map((e, i) => (
             <div key={i} className="music-item">
-                <span>&nbsp;&nbsp;</span><span className="item-title"><b>【{e.file_title}】</b></span>
-                <span style={{ float: 'right', color: '#ffffff' }}>轉譜時間：{e.upload_time}</span>
+                <span>&nbsp;&nbsp;</span><NavLink to={"/mymusic/" + e.file_id} className="item-title-link"><span className="item-title">{e.file_title}</span></NavLink>
+                <span style={{ float: 'right', color: '#ffffff', marginTop: '3px' }}>上傳時間：{e.upload_time.substr(0, 11)}</span>
             </div>
         ));
         return (
