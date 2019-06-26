@@ -8,12 +8,12 @@ export default class Download extends Component {
         this.state = { data: [] };
     }
     componentDidMount() {
-        // this.getPdfFile();
+        this.getPdfFile();
         window.scrollTo(0,0);
     }
 
     getPdfFile = async () => {
-        await fetch('http://localhost:3002/api/getPdfFile')
+        await fetch('http://localhost:3002/api/getFile')
         .then(res => { return res.json() })
         .then(pdfList => {
             if(pdfList.success)
@@ -27,8 +27,8 @@ export default class Download extends Component {
     render() { 
         const list = this.state.data.map((e, i) => (
             <div key={i} className="music-item">
-                <span>&nbsp;&nbsp;</span><span className="item-title"><b>【{e.title}】</b></span>
-                <span style={{ float: 'right', color: '#ffffff' }}>轉譜時間：{e.time}</span>
+                <span>&nbsp;&nbsp;</span><span className="item-title"><b>【{e.file_title}】</b></span>
+                <span style={{ float: 'right', color: '#ffffff' }}>轉譜時間：{e.upload_time}</span>
             </div>
         ));
         return (
