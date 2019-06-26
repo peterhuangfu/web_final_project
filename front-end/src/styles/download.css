@@ -1,0 +1,21 @@
+.music-list-container {
+    padding-top: 6.5vh;
+}
+
+.music-item {
+    width: 85%;
+    margin-left: 5%;
+    padding: 1.5em;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.music-item:hover {
+    background-color: rgba(90, 90, 90, 0.5);
+}
+
+.item-title {
+    font-size: 16px;
+    margin: 4px;
+}

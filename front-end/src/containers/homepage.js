@@ -132,7 +132,7 @@ export default class Homepage extends Component {
                                     className="fab_button"><PersonIcon />
                                 </Fab>
                                 <Dialog className="fab-dialog" open={this.state.fabOpen} onClose={this.handleClose}>
-                                    <DialogTitle id="fab-menu">您好，{this.state.user}！</DialogTitle>
+                                    <DialogTitle id="fab-menu">哈囉，{this.state.user}</DialogTitle>
                                     <DialogActions>
                                         <Button onClick={this.handleClose} color="primary">取消</Button>
                                         <Button onClick={this.props.logout} color="primary">登出</Button>
