@@ -34,11 +34,17 @@ export default class Convertion extends Component {
 
         let data = new FormData();
         let uploader = localStorage.getItem('name');
-        data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader, this.state.lastID+1);
-        
-        await fetch('http://localhost:3002/api/uploadFile', {
+        data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader);
+        // data.append('file', this.state.files[0]);
+        // data.append('name', this.state.files[0].name);
+        // data.append('title', this.state.fileTitle);
+        // data.append('content', this.state.fileContent);
+        // data.append('uploader', uploader);
+        console.log(data.get('file'));
+        console.log(data.get('name'));
+        await fetch('http://localhost:3002/api/upload', {
             method: 'POST',
-            body: data
+            body: data,
         })
         .then(res => { return res.json() })
         .then(res => {
@@ -63,7 +69,9 @@ export default class Convertion extends Component {
                         <button type="file" className="upload-button" onClick={e => this.file.click()}>
                             <UploadIcon style={{ width: '60%', height: '90%' }}/>
                             <b style={{ width: '100%', textAlign: 'center' }}>{this.state.files !== null ? this.state.files[0].name : '上傳WAV、MP3檔'}</b>
-                            <input ref={input => this.file = input} style={{ visibility: 'hidden' }} type="file" name="file" onChange={e => this.setState({ files: e.target.files })} />
+                            <form action="/upload" method="POST" encType="multipart/form-data">
+                                <input ref={input => this.file = input} style={{ visibility: 'hidden' }} type="file" name="file" onChange={e => this.setState({ files: e.target.files })} />
+                            </form>
                         </button>
                     </div>
                     <div className="convertion-input-container">
