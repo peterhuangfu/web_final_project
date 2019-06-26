@@ -6,7 +6,7 @@ import '../styles/convertion.css';
 export default class Convertion extends Component {
     constructor(props) {
         super(props);
-        this.state = { upload: 'notyet', files: null, waiting: false, fileTitle: '', fileContent: '' };
+        this.state = { upload: 'notyet', files: null, waiting: false, fileTitle: '', fileContent: '', lastID: '0' };
     }
 
     componentDidMount() {
@@ -26,10 +26,15 @@ export default class Convertion extends Component {
 
     putFileInDB = async () => {
         await this.setState({ waiting: true });
+        await fetch('http://localhost:3002/api/getFile')
+        .then(res => { return res.json() })
+        .then(res => {
+            this.setState({ lastID: res.data.length });
+        })
 
         let data = new FormData();
         let uploader = localStorage.getItem('name');
-        data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader);
+        data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader, this.state.lastID);
         
         await fetch('http://localhost:3002/api/uploadFile', {
             method: 'POST',
@@ -77,7 +82,7 @@ export default class Convertion extends Component {
                             value={this.state.fileTitle}
                             onChange={this.edit('title')}
                             autoComplete="off"
-                            autoFocus="false" />
+                            autoFocus={false} />
                         </div>
                         <div className="input-subcontainer">
                             <textarea
@@ -88,7 +93,7 @@ export default class Convertion extends Component {
                             value={this.state.fileContent}
                             onChange={this.edit('content')}
                             autoComplete="off"
-                            autoFocus="false" />
+                            autoFocus={false} />
                         </div>
                     </div>
                     <div className="convertion-actions">
