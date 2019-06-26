@@ -2,7 +2,9 @@ import React from "react";
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import '../styles/login.css';
+import '../styles/convertion.css';
 
 const CssTextField = withStyles({
     root: {
@@ -58,13 +60,48 @@ export default function Register(props) {
         { account: '', password: '', email: '', name: '' }
     );
 
+    const [waiting, setWaiting] = React.useState(false);
+
     const change = name => e => {
         setUser({...user, [name]: e.target.value });
     };
 
-    const register = () => {
-        setUser({ account: '', password: '', email: '', name: '' });
-        props.history.push('/login');
+    const register = async () => {
+        await setWaiting(true);
+
+        let data = { name: user.name, account: user.account, password: user.password, email: user.email };
+        await fetch('http://localhost:3002/api/register', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => { return res.json() })
+        .then(res => {
+            if(res.success){
+                setTimeout(() => {
+                    setWaiting(false);
+                    props.history.push('/login')
+                }, 1500);
+            }
+            else {
+                setTimeout(() => {
+                    setWaiting(false);
+                    setUser({ account: '', password: '', email: '', name: '' });
+                    alert('Fail.');
+                }, 1500);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            setTimeout(() => {
+                setWaiting(false);
+                setUser({ account: '', password: '', email: '', name: '' });
+                alert('Fail.');
+            }, 1500);
+        });
+        // props.history.push('/login');
     }
 
     return (
@@ -180,6 +217,7 @@ export default function Register(props) {
                     <span className="login-button"><Button variant="contained" onClick={() => props.history.goBack()}><b>返回</b></Button></span>
                 </div>
             </div>
+            {waiting ? <div className="spinning"><CircularProgress size={80} thickness={5} /></div> : null}
         </div>
     )
 }
