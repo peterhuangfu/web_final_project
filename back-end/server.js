@@ -9,6 +9,7 @@ let GridFsStorage = require('multer-gridfs-storage');
 let Grid = require('gridfs-stream');
 Grid.mongo = mongoose.mongo;
 const User = require("./user")
+const File = require("./file")
 
 const API_PORT = 3002;
 const app = express();
@@ -61,14 +62,7 @@ router.post('/uploadFile', upload.single('file'),(req, res) => {
 });
 
 // this is our get method
-// this method fetches all available data in our database
-// router.get("/getData", (req, res) => {
-//   Draw_used.find((err, data) => {
-//     if (err) return res.json({ success: false, error: err });
-//     return res.json({ success: true, data: data });
-//   });
-// });
-
+// get all user
 router.get("/getUser", (req, res) => {
   User.find((err, data) => {
     //console.log(req.body);
@@ -76,17 +70,16 @@ router.get("/getUser", (req, res) => {
     return res.json({ success: true, data: data });
   });
 });
+//get all file
+router.get("/getFile", (req, res) => {
+  File.find((err, data) => {
+    //console.log(req.body);
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: data });
+  });
+});
 
 // this is our update method
-// this method overwrites existing data in our database
-// router.post("/updateData", (req, res) => {
-//   const { item_id, update } = req.body;
-//   Draw_used.findOneAndUpdate({item_id}, update, err => {
-//     if (err) return res.json({ success: false, error: err });
-//     return res.json({ success: true });
-//   });
-// });
-
 router.post("/updateUser", (req, res) => {
   const { user, update } = req.body;
   User.findOneAndUpdate({user}, update, err => {
