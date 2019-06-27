@@ -173,8 +173,6 @@ router.post("/updateProfile", (req, res) => {
 //   });
 // });
 
-<<<<<<< HEAD
-=======
 router.get("/handshake", (req, res) => {
   const request = req.body;
   return res.json({ token: '123456789' });
@@ -183,7 +181,6 @@ router.get("/handshake", (req, res) => {
 // this is our create methid
 // this method adds new data in our database
 
->>>>>>> afe87590f285cc19ec94fb189b4eeb410e74eeea
 // append /api for our http requests
 app.use("/api", router);
 
