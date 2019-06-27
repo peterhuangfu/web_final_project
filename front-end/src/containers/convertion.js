@@ -34,22 +34,24 @@ export default class Convertion extends Component {
 
         let data = new FormData();
         let uploader = localStorage.getItem('name');
-        data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader);
-        // data.append('file', this.state.files[0]);
-        // data.append('name', this.state.files[0].name);
-        // data.append('title', this.state.fileTitle);
-        // data.append('content', this.state.fileContent);
-        // data.append('uploader', uploader);
+        //data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader);
+        data.append('file', this.state.files[0]);
+        data.append('name', this.state.files[0].name);
+        data.append('title', this.state.fileTitle);
+        data.append('content', this.state.fileContent);
+        data.append('uploader', uploader);
         console.log(data.get('file'));
-        console.log(data.get('name'));
+        console.log(data.get(uploader));
         await fetch('http://localhost:3002/api/upload', {
             method: 'POST',
             body: data,
         })
         .then(res => { return res.json() })
         .then(res => {
-            if(res.success)
+            if(res.success){
+                console.log(res.file);
                 setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
+            }
             else {
                 alert('Fail.');
                 setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);

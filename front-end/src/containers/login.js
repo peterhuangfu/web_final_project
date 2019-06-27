@@ -82,6 +82,7 @@ export default function Login(props) {
                 if (dat.password === user.password) {
                     passwordRight = true;
                     localStorage.setItem('name', dat.name);
+                    localStorage.setItem('account', dat.account);
                 }
             }
         })

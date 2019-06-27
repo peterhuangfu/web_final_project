@@ -58,29 +58,30 @@ conn.on("error", console.error.bind(console, "MongoDB connection error:"));
 // })
 
 const storage = new GridFsStorage({
-   url: dbRoute,
-  // file: (req, file) => {
-  //   return new Promise((resolve, reject) => {
-  //     crypto.ramdonBytes(16, (err, buf) => {
-  //       if (err){
-  //         return reject(err);
-  //       }
-  //       //const filename = buf.toSring('hex') + path.extname(file.originalname);
-  //       const filename = abc;
-  //       const fileInfo = {
-  //         filename: filename,
-  //         bucketName: 'uploads'
-  //       };
-  //       resolve(fileInfo);
-  //     })
-  //   })
-  // }
+  url: dbRoute,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+        const filename = file.originalname;
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        console.log(file.originalname)
+        resolve(fileInfo);
+    });
+  }
 });
-var upload = multer({ storage })
+const upload = multer({ storage })
 
-router.get('/', (req, res) => {
-  res.render('index');
-})
+router.get('/', (req, res) =>{
+  res.json({message: "jjjj"});
+});
+
+
+
+router.post('/upload', upload.single('file'), (req, res) => {
+  return res.json({ success: true, file:req.file });
+});
 
 router.post('/register', (req, res) => {
   let data = new User();
@@ -97,15 +98,12 @@ router.post('/register', (req, res) => {
   data.account = account;
   data.password = password;
   data.email = email;
+  data.content = "";
+  data.img_source = "";
   data.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
-});
-
-router.post('/upload', upload.single('file'),(req, res) => {
-  // res.json({file: req.file});
-  return res.json({ success: true, file: req.file});
 });
 
 // this is our get method
@@ -119,7 +117,6 @@ router.get("/getUser", (req, res) => {
 });
 
 router.get("/getProfile/:user", (req, res) => {
-  console.log(req);
   User.findOne({name: req.params.user}, (err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
@@ -173,27 +170,6 @@ router.post("/updateProfile", (req, res) => {
 //     return res.json({ success: true });
 //   });
 // });
-
-// this is our create methid
-// this method adds new data in our database
-router.post("/putUser", (req, res) => {
-  let data = new User();
-
-  const { account, password } = req.body;
-
-  if (!account) {
-    return res.json({
-      success: false,
-      error: "INVALID INPUTS"
-    });
-  }
-  data.account = account;
-  data.password = password;
-  data.save(err => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
 
 // append /api for our http requests
 app.use("/api", router);
