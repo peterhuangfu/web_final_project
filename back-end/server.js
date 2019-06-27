@@ -94,6 +94,7 @@ router.post('/register', (req, res) => {
       error: "INVALID INPUTS"
     });
   }
+
   data.name = name;
   data.account = account;
   data.password = password;
@@ -117,23 +118,28 @@ router.get("/getUser", (req, res) => {
 });
 
 router.get("/getProfile/:user", (req, res) => {
+<<<<<<< HEAD
   User.findOne({name: req.params.user}, (err, data) => {
+=======
+  // console.log(req);
+  User.findOne({ account: req.params.user }, (err, data) => {
+>>>>>>> afe87590f285cc19ec94fb189b4eeb410e74eeea
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 
 //get all file
-router.get("/getFile", (req, res) => {
-  File.find((err, data) => {
+router.get("/getFile/:user", (req, res) => {
+  File.find({ user_account: req.params.user }, (err, data) => {
     //console.log(req.body);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 //get one file
-router.get("/getFile/:id", (req, res) => {
-  File.findOne({file_id: req.params.id}, (err, data) => {
+router.get("/getFile/:user/:id", (req, res) => {
+  File.findOne({ user_account: req.params.user, file_id: req.params.id }, (err, data) => {
     //console.log(req.body);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
@@ -155,7 +161,7 @@ router.get("/getFile/:id", (req, res) => {
 // this is our update method
 router.post("/updateProfile", (req, res) => {
   const { user, update } = req.body;
-  User.findOneAndUpdate({user}, update, err => {
+  User.findOneAndUpdate({ account: user }, update, err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
@@ -171,6 +177,17 @@ router.post("/updateProfile", (req, res) => {
 //   });
 // });
 
+<<<<<<< HEAD
+=======
+router.get("/handshake", (req, res) => {
+  const request = req.body;
+  return res.json({ token: '123456789' });
+})
+
+// this is our create methid
+// this method adds new data in our database
+
+>>>>>>> afe87590f285cc19ec94fb189b4eeb410e74eeea
 // append /api for our http requests
 app.use("/api", router);
 

@@ -63,7 +63,7 @@ export default function Login(props) {
     const getUserFromDb = async () => {
         await fetch("http://localhost:3002/api/getUser")
         .then(res => { return res.json() })
-        .then(res => ( userFromDB = res.data) );
+        .then(res => ( userFromDB = res.data ));
         //console.log(userFromDB[0].account);
     };
 
@@ -72,6 +72,9 @@ export default function Login(props) {
     };
 
     const login = async () => {
+        if(user.account === '' || user.password === '')
+            return null;
+        
         let registered = false;
         let passwordRight = false;
 
@@ -101,12 +104,6 @@ export default function Login(props) {
         await setUser({ account: '', password: '' });
         if(passwordRight)
             props.login();
-        //console.log(userFromDB[0].account)
-        //console.log(userFromDB[0].account);
-        // axios.post("http://localhost:3002/api/putUser", {
-        //     account: user.account,
-        //     password: user.password,
-        // });
     }
 
     return (

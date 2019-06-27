@@ -6,18 +6,21 @@ import '../styles/convertion.css';
 export default class UpdateProfile extends Component {
     constructor(props) {
         super(props);
-        this.state = { name: '', content: '', img_source: '', waiting: false };
+        this.state = { user: '', content: '', img_source: '', waiting: false };
     }
     componentDidMount() {
         window.scrollTo(0,0);
 
-        let user = localStorage.getItem('name');
+        let user = localStorage.getItem('account');
         let url = 'http://localhost:3002/api/getProfile/' + user;
         fetch(url)
         .then(res => { return res.json() })
         .then(originData => {
             if(originData.success) {
-                this.setState(() => ({ name: user, content: originData.data.content, img_source: originData.data.img_source }));
+                if(originData.data !== null)
+                    this.setState({ user: user, content: originData.data.content, img_source: originData.data.img_source });
+                else
+                    this.setState({ user: user });
             }
             else
                 alert('Fail.');
@@ -28,7 +31,8 @@ export default class UpdateProfile extends Component {
     update = async () => {
         await this.setState({ waiting: true });
 
-        let data = { name: this.state.name, update: { content: this.state.content, img_source: this.state.img_source } };
+        let data = { user: this.state.user, update: { content: this.state.content, img_source: this.state.img_source } };
+        console.log(data);
         await fetch('http://localhost:3002/api/updateProfile', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -70,7 +74,7 @@ export default class UpdateProfile extends Component {
     }
 
     render() {
-        return this.state.name ? (
+        return this.state.user ? (
             <div className="edit_profile">
                 <div className="edit-profile-title"><b>編輯個人資訊</b></div>
                 <div className="edit-profile-block">

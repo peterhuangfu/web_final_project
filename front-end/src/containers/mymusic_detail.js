@@ -5,12 +5,12 @@ import '../styles/mymusic_detail.css';
 export default class MymusicDetail extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: null };
+        this.state = { data: null, yourself: localStorage.getItem('name') };
     }
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        let url = 'http://localhost:3002/api/getFile/' + id;
+        let url = 'http://localhost:3002/api/getFile/' + localStorage.getItem('account') + '/' + id;
         fetch(url)
         .then(res => { return res.json() })
         .then(originData => {
@@ -32,7 +32,7 @@ export default class MymusicDetail extends Component {
         return this.state.data ? (
             <div>
                 <div className="music-itself">
-                    <Post id={id} title={this.state.data.file_title} source="http://i.imgur.com/Dqef6.jpg" author={this.state.data.user_name} content={this.state.data.file_description} time={this.state.data.upload_time} />
+                    <Post id={id} title={this.state.data.file_title} source="http://i.imgur.com/Dqef6.jpg" author={this.state.yourself} content={this.state.data.file_description} time={this.state.data.upload_time} />
                 </div>
                 <div className="music-detail_button-container">
                     <button className="music-detail_button" onClick={this.goBack}><b>上一頁</b></button>

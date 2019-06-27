@@ -26,13 +26,15 @@ export default class Convertion extends Component {
 
     putFileInDB = async () => {
         await this.setState({ waiting: true });
-        await fetch('http://localhost:3002/api/getFile')
+        let url = 'http://localhost:3002/api/getFile/' + localStorage.getItem('account');
+        await fetch(url)
         .then(res => { return res.json() })
         .then(res => {
             this.setState({ lastID: res.data.length });
         })
 
         let data = new FormData();
+<<<<<<< HEAD
         let uploader = localStorage.getItem('name');
         //data.append('file', this.state.files[0], this.state.files[0].name, this.state.fileTitle, this.state.fileContent, uploader);
         data.append('file', this.state.files[0]);
@@ -40,6 +42,15 @@ export default class Convertion extends Component {
         data.append('title', this.state.fileTitle);
         data.append('content', this.state.fileContent);
         data.append('uploader', uploader);
+=======
+        let uploader = localStorage.getItem('account');
+        data.append('file', this.state.files[0], this.state.files[0].name, this.state.lastID+1, this.state.fileTitle, this.state.fileContent, uploader);
+        // data.append('file', this.state.files[0]);
+        // data.append('name', this.state.files[0].name);
+        // data.append('title', this.state.fileTitle);
+        // data.append('content', this.state.fileContent);
+        // data.append('uploader', uploader);
+>>>>>>> afe87590f285cc19ec94fb189b4eeb410e74eeea
         console.log(data.get('file'));
         console.log(data.get(uploader));
         await fetch('http://localhost:3002/api/upload', {

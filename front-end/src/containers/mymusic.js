@@ -10,7 +10,7 @@ import '../styles/mymusic.css';
 export default class Mymusic extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: null };
+        this.state = { data: null, yourself: localStorage.getItem('name') };
     }
     componentDidMount() {
         this.getPdfFile();
@@ -18,7 +18,8 @@ export default class Mymusic extends Component {
     }
 
     getPdfFile = async () => {
-        await fetch('http://localhost:3002/api/getFile')
+        let url = 'http://localhost:3002/api/getFile/' + localStorage.getItem('account');
+        await fetch(url)
         .then(res => { return res.json() })
         .then(originData => {
             if(originData.success) {
@@ -43,7 +44,7 @@ export default class Mymusic extends Component {
                                 <GridListTileBar
                                 style={{ height: '25%' }}
                                 title={data.file_title}
-                                subtitle={<span>by {data.user_name}</span>}
+                                subtitle={<span>by {this.state.yourself}</span>}
                                 actionIcon={
                                     <IconButton aria-label={`info about ${data.file_title}`} style={{ color: 'rgba(255, 255, 255, 0.54)' }}>
                                         <InfoIcon />

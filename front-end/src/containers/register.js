@@ -67,6 +67,9 @@ export default function Register(props) {
     };
 
     const register = async () => {
+        if(user.account === '' || user.password === '' || user.email === '' || user.name === '')
+            return null;
+            
         await setWaiting(true);
 
         let data = { name: user.name, account: user.account, password: user.password, email: user.email };
@@ -130,6 +133,7 @@ export default function Register(props) {
                         value={user.account}
                         variant="outlined"
                         margin="normal"
+                        required
                         onChange={change('account')}
                         autoComplete="off"
                     />
@@ -156,6 +160,7 @@ export default function Register(props) {
                         variant="outlined"
                         margin="normal"
                         value={user.email}
+                        required
                         onChange={change('email')}
                         autoComplete="off"
                     />
@@ -181,6 +186,7 @@ export default function Register(props) {
                         value={user.name}
                         variant="outlined"
                         margin="normal"
+                        required
                         onChange={change('name')}
                         autoComplete="off"
                     />
@@ -206,6 +212,7 @@ export default function Register(props) {
                         }}
                         variant="outlined"
                         margin="normal"
+                        required
                         value={user.password}
                         onChange={change('password')}
                         autoComplete="off"
