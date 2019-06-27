@@ -7,7 +7,7 @@ import '../styles/download.css';
 export default class Download extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+        this.state = { data: [], filename: ""};
     }
 
     componentDidMount() {
@@ -16,13 +16,16 @@ export default class Download extends Component {
     }
 
     download = async (file_id) => {
-        let url = 'http://localhost:3002/api/downloadFile/' + localStorage.getItem('account') + '/' + file_id;
-        await fetch(url)
-        .then(res => {
-            let blob = new Blob([res], { type: "application/pdf" });
-            FileSaver.saveAs(blob, "file_" + file_id + ".pdf");
-        })
-        .catch((err) => console.error(err));
+        // let url = 'http://localhost:3002/api/gethihi/' + localStorage.getItem('account') + '/' + file_id;
+        // await fetch(url)
+        // .then(res => {
+        //     let blob = new Blob([res], { type: "application/pdf" });
+        //     console.log(blob)
+        //     FileSaver.saveAs("http://localhost:3002/api/gethihi/DSP%20final.pdf", "file_" + file_id + ".pdf");
+        // })
+        // .catch((err) => console.error(err));
+        let url = 'http://localhost:3002/api/gethihi/' + this.state.filename;
+        FileSaver.saveAs(url, "file_" + file_id + ".pdf");
     }
 
     getPdfFile = async () => {
@@ -31,8 +34,9 @@ export default class Download extends Component {
         .then(res => { return res.json() })
         .then(pdfList => {
             if(pdfList.success){
+                console.log(pdfList.data[0].filename)
                 pdfList.data.reverse();
-                this.setState(() => ({ data: pdfList.data }));
+                this.setState(() => ({ data: pdfList.data, filename: pdfList.data[0].filename }));
             }
             else
                 alert('Fail.');
@@ -45,7 +49,7 @@ export default class Download extends Component {
             <div key={i} className="music-item">
                 <div><span>&nbsp;&nbsp;</span><NavLink to={"/mymusic/" + e.file_id} className="item-title-link"><span className="item-title">{e.file_title}</span></NavLink></div>
                 <div className="download-button"><Button variant="contained" color="primary" onClick={event => this.download(e.file_id)}>下載</Button></div>
-                <div><span style={{ color: '#ffffff' }}>上傳時間：{e.upload_time.substr(0, 11)}</span></div>
+                <div><span style={{ color: '#ffffff' }}>上傳時間：{e.uploadDate.substr(0, 11)}</span></div>
             </div>
         ));
         return (

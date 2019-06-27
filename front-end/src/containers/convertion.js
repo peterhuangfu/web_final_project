@@ -74,52 +74,6 @@ export default class Convertion extends Component {
         // data.append('file', this.state.files[0]);
         // data.append('file', pdfReadfer);
         
-<<<<<<< HEAD
-        await fetch('http://localhost:3002/api/upload/', {
-            method: 'POST',
-            body: data,
-            headers: header
-        })
-        .then(res => { console.log(res); return res; })
-        .then(res => {
-            if(res.success){
-                this.setState({ pdf: res });
-                setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
-            }
-            else {
-                alert('Fail.');
-                setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-            }
-        })
-        .catch((err) => {
-            console.error(err);
-            setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-        });
-
-        // let save_data = new FormData();
-        // save_data.append(this.state.pdf, { file: this.state.pdf, user: localStorage.getItem('account'), file_id: this.state.lastID+1, file_title: this.state.fileTitle, file_content: this.state.fileContent });
-
-        // await fetch('http://localhost:3002/api/savePdf/', {
-        //     method: 'POST',
-        //     body: save_data
-        // })
-        // .then(res => { return res.json() })
-        // .then(res => {
-        //     if(res.success){
-        //         setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false, pdf: null }), 1500);
-        //     }
-        //     else {
-        //         alert('Fail.');
-        //         setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
-        //     }
-        // })
-        // .catch((err) => {
-        //     console.error(err);
-        //     setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
-        // });
-
-        this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
-=======
         // let save_data = new FormData();
         // save_data.append(this.state.pdf, { file: this.state.pdf, user: localStorage.getItem('account'), file_id: this.state.lastID+1, file_title: this.state.fileTitle, file_content: this.state.fileContent });
 
@@ -146,7 +100,6 @@ export default class Convertion extends Component {
         // });
 
         // this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
->>>>>>> f05bc4bfd84c3736c78ab098ee5be177d1e7d4d1
     };
 
     // processPdf = async (pdf) => {
