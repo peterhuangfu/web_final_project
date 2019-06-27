@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import '../styles/convertion.css';
+import { func } from "prop-types";
 
 export default class Convertion extends Component {
     constructor(props) {
@@ -41,11 +42,39 @@ export default class Convertion extends Component {
 
         await this.setState({ waiting: true });
 
+        let pdfReader = new FileReader();
+        pdfReader.onload = async function() {
+            console.log(pdfReader.result);
+            await fetch('http://c07dcf43.ngrok.io/test/', {
+                method: 'POST',
+                body: pdfReader.result,
+                // headers: header
+            })
+            .then(res => { console.log(res); return res; })
+            .then(res => {
+                if(res.success){
+                    this.setState({ pdf: res });
+                    // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
+                }
+                else {
+                    alert('Fail.');
+                    // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+            });
+        }
+        pdfReader.readAsBinaryString(this.state.files[0]);
+
         let data = new FormData();
         let leng = this.state.files[0].size.toString();
         let header = { 'Content-Length': leng, Accept: 'application/json' };
-        data.append('file', this.state.files[0]);
+        // data.append('file', this.state.files[0]);
+        // data.append('file', pdfReadfer);
         
+<<<<<<< HEAD
         await fetch('http://localhost:3002/api/upload/', {
             method: 'POST',
             body: data,
@@ -90,7 +119,58 @@ export default class Convertion extends Component {
         // });
 
         this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
+=======
+        // let save_data = new FormData();
+        // save_data.append(this.state.pdf, { file: this.state.pdf, user: localStorage.getItem('account'), file_id: this.state.lastID+1, file_title: this.state.fileTitle, file_content: this.state.fileContent });
+
+        // await fetch('http://localhost:3002/api/savePdf/', {
+        //     method: 'POST',
+        //     body: save_data,
+        //     // headers: {
+        //     //     'Content-Type': 'multipart/form-data'
+        //     // }
+        // })
+        // .then(res => { return res.json() })
+        // .then(res => {
+        //     if(res.success){
+        //         setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false, pdf: null }), 1500);
+        //     }
+        //     else {
+        //         alert('Fail.');
+        //         setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
+        //     }
+        // })
+        // .catch((err) => {
+        //     console.error(err);
+        //     setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
+        // });
+
+        // this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
+>>>>>>> f05bc4bfd84c3736c78ab098ee5be177d1e7d4d1
     };
+
+    // processPdf = async (pdf) => {
+    //     await fetch('http://c07dcf43.ngrok.io/test/', {
+    //         method: 'POST',
+    //         body: pdf.result,
+    //         // headers: header
+    //     })
+    //     .then(res => { console.log(res); return res; })
+    //     .then(res => {
+    //         if(res.success){
+    //             this.setState({ pdf: res });
+    //             // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
+    //         }
+    //         else {
+    //             alert('Fail.');
+    //             // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+    //         }
+    //     })
+    //     .catch((err) => {
+    //         console.error(err);
+    //         // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+    //     });
+    // }
 
     localUpload = e => {
         if(e.target.files.length === 0)
