@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
 var cors = require("cors");
-const crypto = require("crypto");
 const bodyParser = require("body-parser");
 const logger = require("morgan");
 const multer = require('multer');
@@ -45,47 +44,31 @@ conn.once("open", () => {
 // checks if connection with the database is successful
 conn.on("error", console.error.bind(console, "MongoDB connection error:"));
 
-// (optional) only made for logging and
-// bodyParser, parses the request body to be a readable json format
-
-// var storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//   cb(null, 'public')
-// },
-//   filename: function (req, file, cb) {
-//   cb(null, Date.now() + '-' +file.originalname )
-// }
-// })
-
 const storage = new GridFsStorage({
   url: dbRoute,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-        const filename = file.originalname;
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        console.log(file.originalname)
-        resolve(fileInfo);
-    });
-  }
+  filename: (req, file, cb) => {
+    // The way you want to store your file in database
+    cb(null, file.originalname); 
+  },
+
+  // Additional Meta-data that you want to store
+  metadata: function(req, file, cb) {
+    cb(null, { originalname: file.originalname });
+  },
+  root: 'ctFiles' // Root collection name
 });
+
 const upload = multer({ storage })
 
-router.get('/', (req, res) =>{
-  res.json({message: "jjjj"});
-});
-
-
-
+// all POST ------------------------------------------------------
+// upload file
 router.post('/upload', upload.single('file'), (req, res) => {
   return res.json({ success: true, file:req.file });
 });
 
+// register
 router.post('/register', (req, res) => {
   let data = new User();
-
   const { name, account, password, email } = req.body;
 
   if (!account || !name || !password || !email) {
@@ -107,8 +90,17 @@ router.post('/register', (req, res) => {
   });
 });
 
-// this is our get method
-// get all user
+//updateProfile
+router.post("/updateProfile", (req, res) => {
+  const { user, update } = req.body;
+  User.findOneAndUpdate({ account: user }, update, err => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true });
+  });
+});
+
+// all GET ---------------------------------------------------------
+// get all users
 router.get("/getUser", (req, res) => {
   User.find((err, data) => {
     //console.log(req.body);
@@ -117,6 +109,7 @@ router.get("/getUser", (req, res) => {
   });
 });
 
+// get one user
 router.get("/getProfile/:user", (req, res) => {
   // console.log(req);
   User.findOne({ account: req.params.user }, (err, data) => {
@@ -125,7 +118,7 @@ router.get("/getProfile/:user", (req, res) => {
   });
 });
 
-//get all file
+// get all file
 router.get("/getFile/:user", (req, res) => {
   File.find({ user_account: req.params.user }, (err, data) => {
     //console.log(req.body);
@@ -142,44 +135,36 @@ router.get("/getFile/:user/:id", (req, res) => {
   });
 });
 
+// get a file from DB
+router.get("/gethihi/:filename", (req, res) => {
+  gfs.collection('ctFiles'); //set collection name to lookup into
 
+    /** First check if file exists */
+    gfs.files.find({filename: req.params.filename}).toArray(function(err, files){
+        if(!files || files.length === 0){
+            return res.status(404).json({
+                responseCode: 1,
+                responseMessage: "error"
+            });
+        }
+        // create read stream
+        var readstream = gfs.createReadStream({
+            filename: files[0].filename,
+            root: "ctFiles"
+        });
+        // set the proper content type 
+        res.set('Content-Type', files[0].contentType)
+        // Return response
+        return readstream.pipe(res);
+    });
 
-// router.get("/getFile/:filename", (req, res) => {
-//   gfs.files.findOne({filename: req.params.filename}, (err, file => {
-//     if (!file || file.length === 0){
-//       return res.status(404).json({
-//         err:  'No files exist'
-//       })
-//     }
-//   }))
-// })
-
-// this is our update method
-router.post("/updateProfile", (req, res) => {
-  const { user, update } = req.body;
-  User.findOneAndUpdate({ account: user }, update, err => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
-
-// this is our delete method
-// this method removes existing data in our database
-// router.delete("/deleteData", (req, res) => {
-//   const { name } = req.body;
-//   Draw_used.findOneAndDelete(name, err => {
-//     if (err) return res.send(err);
-//     return res.json({ success: true });
-//   });
-// });
-
-router.get("/handshake", (req, res) => {
-  const request = req.body;
-  return res.json({ token: '123456789' });
 })
 
-// this is our create methid
-// this method adds new data in our database
+// handshake
+router.get("/handshake", (req, res) => {
+  const request = req.body;
+  return res.json({ success:true, });
+})
 
 // append /api for our http requests
 app.use("/api", router);
