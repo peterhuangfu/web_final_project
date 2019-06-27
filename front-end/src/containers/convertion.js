@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import '../styles/convertion.css';
-import { func } from "prop-types";
 
 export default class Convertion extends Component {
     constructor(props) {
@@ -42,37 +41,26 @@ export default class Convertion extends Component {
 
         await this.setState({ waiting: true });
 
-        let pdfReader = new FileReader();
-        pdfReader.onload = async function() {
-            console.log(pdfReader.result);
-            await fetch('http://c07dcf43.ngrok.io/test/', {
-                method: 'POST',
-                body: pdfReader.result,
-                // headers: header
-            })
-            .then(res => { console.log(res); return res; })
-            .then(res => {
-                if(res.success){
-                    this.setState({ pdf: res });
-                    // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
-                }
-                else {
-                    alert('Fail.');
-                    // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-                }
-            })
-            .catch((err) => {
-                console.error(err);
+        let wav_file = new Blob([this.state.files[0]], { 'type' : 'audio/wav; codecs=MS_PCM' });
+        await fetch('http://c07dcf43.ngrok.io/test/', {
+            method: 'POST',
+            body: wav_file
+        })
+        .then(res => { console.log(res); return res; })
+        .then(res => {
+            if(res.success){
+                this.setState({ pdf: res });
+                // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
+            }
+            else {
+                alert('Fail.');
                 // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-            });
-        }
-        pdfReader.readAsBinaryString(this.state.files[0]);
-
-        let data = new FormData();
-        let leng = this.state.files[0].size.toString();
-        let header = { 'Content-Length': leng, Accept: 'application/json' };
-        // data.append('file', this.state.files[0]);
-        // data.append('file', pdfReadfer);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+        });
         
         // let save_data = new FormData();
         // save_data.append(this.state.pdf, { file: this.state.pdf, user: localStorage.getItem('account'), file_id: this.state.lastID+1, file_title: this.state.fileTitle, file_content: this.state.fileContent });
