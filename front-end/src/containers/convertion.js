@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import '../styles/convertion.css';
-import { func } from "prop-types";
 
 export default class Convertion extends Component {
     constructor(props) {
@@ -42,37 +41,27 @@ export default class Convertion extends Component {
 
         await this.setState({ waiting: true, upload: 'uploading' });
 
-        let pdfReader = new FileReader();
-        pdfReader.onload = async function() {
-            console.log(pdfReader.result);
-            await fetch('http://c07dcf43.ngrok.io/test/', {
-                method: 'POST',
-                body: pdfReader.result,
-                // headers: header
-            })
-            .then(res => { console.log(res); return res; })
-            .then(res => {
-                if(res.success){
-                    this.setState({ pdf: res });
-                    // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
-                }
-                else {
-                    alert('Fail.');
-                    // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-                }
-            })
-            .catch((err) => {
-                console.error(err);
+        let wav_file = new Blob([this.state.files[0]], { 'type' : 'audio/wav; codecs=MS_PCM' });
+        await fetch('http://007808a4.ngrok.io/test/', {
+            method: 'POST',
+            body: wav_file
+        })
+        .then(res => { return res })
+        .then(res => {
+            console.log(res);
+            if(res.success){
+                this.setState({ pdf: res });
+                // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
+            }
+            else {
+                alert('Fail.');
                 // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-            });
-        }
-        pdfReader.readAsBinaryString(this.state.files[0]);
-
-        let data = new FormData();
-        let leng = this.state.files[0].size.toString();
-        let header = { 'Content-Length': leng, Accept: 'application/json' };
-        // data.append('file', this.state.files[0]);
-        // data.append('file', pdfReadfer);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+        });
         
         let upload_data = new FormData();
         upload_data.append('file', this.state.pdf);
@@ -101,29 +90,6 @@ export default class Convertion extends Component {
         this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
     };
 
-    // processPdf = async (pdf) => {
-    //     await fetch('http://c07dcf43.ngrok.io/test/', {
-    //         method: 'POST',
-    //         body: pdf.result,
-    //         // headers: header
-    //     })
-    //     .then(res => { console.log(res); return res; })
-    //     .then(res => {
-    //         if(res.success){
-    //             this.setState({ pdf: res });
-    //             // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
-    //         }
-    //         else {
-    //             alert('Fail.');
-    //             // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-    //         }
-    //     })
-    //     .catch((err) => {
-    //         console.error(err);
-    //         // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-    //     });
-    // }
-
     localUpload = e => {
         if(e.target.files.length === 0)
             this.setState({ upload: 'notyet', files: null });
@@ -137,7 +103,7 @@ export default class Convertion extends Component {
                 <div className="convertion">
                     <div className="convertion-screen">
                         <button type="file" className="upload-button" onClick={e => this.file.click()}>
-                            <UploadIcon style={{ width: '60%', height: '90%' }}/>
+                            <UploadIcon style={{ width: '60%', minHeight: '83%', maxHeight: '90%' }}/>
                             <b style={{ width: '100%', textAlign: 'center' }}>{this.state.files !== null ? this.state.files[0].name : '上傳WAV、MP3檔'}</b>
                             <input ref={input => this.file = input} style={{ visibility: 'hidden' }} type="file" name="file" onChange={this.localUpload} />
                         </button>
