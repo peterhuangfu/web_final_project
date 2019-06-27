@@ -7,7 +7,7 @@ import { func } from "prop-types";
 export default class Convertion extends Component {
     constructor(props) {
         super(props);
-        this.state = { upload: 'notyet', files: null, waiting: false, fileTitle: '', fileContent: '', lastID: '0', pdf: null };
+        this.state = { upload: 'notyet', files: null, waiting: false, fileTitle: '', fileContent: '', lastID: 0, pdf: null };
     }
 
     componentDidMount() {
@@ -74,32 +74,31 @@ export default class Convertion extends Component {
         // data.append('file', this.state.files[0]);
         // data.append('file', pdfReadfer);
         
-        // let save_data = new FormData();
-        // save_data.append(this.state.pdf, { file: this.state.pdf, user: localStorage.getItem('account'), file_id: this.state.lastID+1, file_title: this.state.fileTitle, file_content: this.state.fileContent });
+        let upload_data = new FormData();
+        upload_data.append('file', this.state.pdf);
 
-        // await fetch('http://localhost:3002/api/savePdf/', {
-        //     method: 'POST',
-        //     body: save_data,
-        //     // headers: {
-        //     //     'Content-Type': 'multipart/form-data'
-        //     // }
-        // })
-        // .then(res => { return res.json() })
-        // .then(res => {
-        //     if(res.success){
-        //         setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false, pdf: null }), 1500);
-        //     }
-        //     else {
-        //         alert('Fail.');
-        //         setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
-        //     }
-        // })
-        // .catch((err) => {
-        //     console.error(err);
-        //     setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
-        // });
+        let current_fileid = this.state.lastID + 1;
+        let uploadUrl = 'http://localhost:3002/api/upload/' + localStorage.getItem('account') + '/' + current_fileid.toString() + '/' + this.state.fileContent + '/' + this.state.fileTitle;
+        await fetch(uploadUrl, {
+            method: 'POST',
+            body: upload_data
+        })
+        .then(res => { return res.json() })
+        .then(res => {
+            if(res.success){
+                setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false, pdf: null }), 1500);
+            }
+            else {
+                alert('Fail.');
+                setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
+        });
 
-        // this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
+        this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
     };
 
     // processPdf = async (pdf) => {
