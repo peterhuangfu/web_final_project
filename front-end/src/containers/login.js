@@ -63,7 +63,7 @@ export default function Login(props) {
     const getUserFromDb = async () => {
         await fetch("http://localhost:3002/api/getUser")
         .then(res => { return res.json() })
-        .then(res => ( userFromDB = res.data) );
+        .then(res => ( userFromDB = res.data ));
         //console.log(userFromDB[0].account);
     };
 

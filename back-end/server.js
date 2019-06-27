@@ -128,16 +128,16 @@ router.get("/getProfile/:user", (req, res) => {
 });
 
 //get all file
-router.get("/getFile", (req, res) => {
-  File.find((err, data) => {
+router.get("/getFile/:user", (req, res) => {
+  File.find({ user_account: req.params.user }, (err, data) => {
     //console.log(req.body);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
 });
 //get one file
-router.get("/getFile/:id", (req, res) => {
-  File.findOne({file_id: req.params.id}, (err, data) => {
+router.get("/getFile/:user/:id", (req, res) => {
+  File.findOne({ user_account: req.params.user, file_id: req.params.id }, (err, data) => {
     //console.log(req.body);
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });

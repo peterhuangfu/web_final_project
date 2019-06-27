@@ -29,7 +29,8 @@ export default class Download extends Component {
     }
 
     getPdfFile = async () => {
-        await fetch('http://localhost:3002/api/getFile')
+        let url = 'http://localhost:3002/api/getFile/' + localStorage.getItem('account');
+        await fetch(url)
         .then(res => { return res.json() })
         .then(pdfList => {
             if(pdfList.success){

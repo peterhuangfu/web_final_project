@@ -18,7 +18,6 @@ export default class Profile extends Component {
             if(originData.success) {
                 if(originData.data !== null)
                     this.setState({ content: originData.data.content, img_source: originData.data.img_source });
-                setTimeout(() => console.log(this.state), 100);
             }
             else
                 alert('Fail.');
@@ -53,7 +52,7 @@ export default class Profile extends Component {
                 <hr />
                 <div className="profile-container">
                     {/* <div className="profile-text-2 profile-text">{this.state.content.split('\n').map((item, i) => { return <span key={i}>{item}<br /></span> } )}</div> */}
-                    <div className="profile-text"><span>{this.state.content}</span></div>
+                    <div className="profile-text profile-text-2"><span>{this.state.content}</span></div>
                 </div>
             </div>
         );

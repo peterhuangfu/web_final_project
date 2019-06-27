@@ -9,7 +9,7 @@ const DataSchema = new Schema(
     file_id: String,
     file_name: String,  
     file_description: String,  
-    user_name: String,  
+    user_account: String,  
   }
 );
 
