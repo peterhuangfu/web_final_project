@@ -32,7 +32,6 @@ export default class UpdateProfile extends Component {
         await this.setState({ waiting: true });
 
         let data = { user: this.state.user, update: { content: this.state.content, img_source: this.state.img_source } };
-        console.log(data);
         await fetch('http://localhost:3002/api/updateProfile', {
             method: 'POST',
             body: JSON.stringify(data),

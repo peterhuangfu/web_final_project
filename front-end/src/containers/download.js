@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import FileSaver from 'file-saver';
 import '../styles/download.css';
 
 export default class Download extends Component {
@@ -15,16 +16,12 @@ export default class Download extends Component {
     }
 
     download = async (file_id) => {
-        await fetch('http://c07dcf43.ngrok.io/test/')
-        .then(res => { console.log(res) })
-        // .then(pdfList => {
-        //     if(pdfList.success){
-        //         pdfList.data.reverse();
-        //         this.setState(() => ({ data: pdfList.data }));
-        //     }
-        //     else
-        //         alert('Fail.');
-        // })
+        let url = 'http://localhost:3002/api/downloadFile/' + localStorage.getItem('account') + '/' + file_id;
+        await fetch(url)
+        .then(res => {
+            let blob = new Blob(res.json(), { type: "application/pdf" });
+            FileSaver.saveAs(blob, "file_" + file_id + ".pdf");
+        })
         .catch((err) => console.error(err));
     }
 

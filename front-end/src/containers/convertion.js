@@ -6,11 +6,22 @@ import '../styles/convertion.css';
 export default class Convertion extends Component {
     constructor(props) {
         super(props);
-        this.state = { upload: 'notyet', files: null, waiting: false, fileTitle: '', fileContent: '', lastID: '0' };
+        this.state = { upload: 'notyet', files: null, waiting: false, fileTitle: '', fileContent: '', lastID: '0', pdf: null };
     }
 
     componentDidMount() {
         window.scrollTo(0,0);
+        let url = 'http://localhost:3002/api/getFile/' + localStorage.getItem('account');
+        fetch(url)
+        .then(res => { return res.json() })
+        .then(originData => {
+            if(originData.success) {
+                this.setState(() => ({ lastID: originData.data.length }));
+            }
+            else
+                alert('Fail.');
+        })
+        .catch((err) => console.error(err));
     }
 
     clear = () => {
@@ -25,44 +36,68 @@ export default class Convertion extends Component {
     }
 
     putFileInDB = async () => {
+        if(this.state.files === null || this.state.fileTitle === '')
+            return null;
+
         await this.setState({ waiting: true });
-        let url = 'http://localhost:3002/api/getFile/' + localStorage.getItem('account');
-        await fetch(url)
-        .then(res => { return res.json() })
-        .then(res => {
-            this.setState({ lastID: res.data.length });
-        })
 
         let data = new FormData();
-        let uploader = localStorage.getItem('account');
-        data.append('file', this.state.files[0], this.state.files[0].name, this.state.lastID+1, this.state.fileTitle, this.state.fileContent, uploader);
-        // data.append('file', this.state.files[0]);
-        // data.append('name', this.state.files[0].name);
-        // data.append('title', this.state.fileTitle);
-        // data.append('content', this.state.fileContent);
-        // data.append('uploader', uploader);
-        console.log(data.get('file'));
-        console.log(data.get(uploader));
-        await fetch('http://localhost:3002/api/upload', {
+        let leng = this.state.files[0].size.toString();
+        let header = { 'Content-Length': leng, Accept: 'application/json' };
+        data.append('file', this.state.files[0]);
+        
+        await fetch('http://c07dcf43.ngrok.io/test/', {
             method: 'POST',
             body: data,
+            headers: header
         })
-        .then(res => { return res.json() })
+        .then(res => { console.log(res); return res; })
         .then(res => {
             if(res.success){
-                console.log(res.file);
-                setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
+                this.setState({ pdf: res });
+                // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
             }
             else {
                 alert('Fail.');
-                setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+                // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
             }
         })
         .catch((err) => {
             console.error(err);
-            setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+            // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
         });
+
+        let save_data = new FormData();
+        save_data.append(this.state.pdf, { file: this.state.pdf, user: localStorage.getItem('account'), file_id: this.state.lastID+1, file_title: this.state.fileTitle, file_content: this.state.fileContent });
+
+        await fetch('http://localhost:3002/api/savePdf/', {
+            method: 'POST',
+            body: save_data
+        })
+        .then(res => { return res.json() })
+        .then(res => {
+            if(res.success){
+                setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false, pdf: null }), 1500);
+            }
+            else {
+                alert('Fail.');
+                setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
+        });
+
+        this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
     };
+
+    localUpload = e => {
+        if(e.target.files.length === 0)
+            this.setState({ upload: 'notyet', files: null });
+        else
+            this.setState({ upload: 'notyet', files: e.target.files });
+    }
 
     render() {
         return (
@@ -72,7 +107,7 @@ export default class Convertion extends Component {
                         <button type="file" className="upload-button" onClick={e => this.file.click()}>
                             <UploadIcon style={{ width: '60%', height: '90%' }}/>
                             <b style={{ width: '100%', textAlign: 'center' }}>{this.state.files !== null ? this.state.files[0].name : '上傳WAV、MP3檔'}</b>
-                            <input ref={input => this.file = input} style={{ visibility: 'hidden' }} type="file" name="file" onChange={e => this.setState({ files: e.target.files })} />
+                            <input ref={input => this.file = input} style={{ visibility: 'hidden' }} type="file" name="file" onChange={this.localUpload} />
                         </button>
                     </div>
                     <div className="convertion-input-container">
