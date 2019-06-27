@@ -41,7 +41,6 @@ export default class Convertion extends Component {
     putFileInDB = async () => {
         if(this.state.files === null || this.state.fileTitle === '' || this.state.fileContent === '')
             return null;
-        console.log(this.state.files[0])
 
         await this.setState({ waiting: true, upload: 'uploading' });
 
@@ -52,31 +51,15 @@ export default class Convertion extends Component {
         })
         .then(res => { return res })
         .then(res => {
-<<<<<<< HEAD
-            //console.log(res);
-            
-                this.setState({ pdf: res });
-                // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
-            
-=======
             this.setState({ pdf: res });
->>>>>>> 20284811240c39192b141665134b33586a0765d3
         })
         .catch((err) => {
             console.error(err);
             // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
         });
         
-<<<<<<< HEAD
-        console.log(this.state.pdf)
-=======
         let save_file = new File([this.state.pdf.body], this.state.files[0].name, { type: 'application/pdf' });
-<<<<<<< HEAD
-        console.log(save_file);
-=======
         
->>>>>>> 20284811240c39192b141665134b33586a0765d3
->>>>>>> b6305ed8f23c49cbf345c6ec49708d13dcbfdbad
         let upload_data = new FormData();
         upload_data.append('file', save_file);
 
