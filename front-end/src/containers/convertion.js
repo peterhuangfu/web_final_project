@@ -46,7 +46,7 @@ export default class Convertion extends Component {
         let header = { 'Content-Length': leng, Accept: 'application/json' };
         data.append('file', this.state.files[0]);
         
-        await fetch('http://c07dcf43.ngrok.io/test/', {
+        await fetch('http://localhost:3002/api/upload/', {
             method: 'POST',
             body: data,
             headers: header
@@ -55,39 +55,39 @@ export default class Convertion extends Component {
         .then(res => {
             if(res.success){
                 this.setState({ pdf: res });
-                // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
+                setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
             }
             else {
                 alert('Fail.');
-                // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+                setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
             }
         })
         .catch((err) => {
             console.error(err);
-            // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
+            setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
         });
 
-        let save_data = new FormData();
-        save_data.append(this.state.pdf, { file: this.state.pdf, user: localStorage.getItem('account'), file_id: this.state.lastID+1, file_title: this.state.fileTitle, file_content: this.state.fileContent });
+        // let save_data = new FormData();
+        // save_data.append(this.state.pdf, { file: this.state.pdf, user: localStorage.getItem('account'), file_id: this.state.lastID+1, file_title: this.state.fileTitle, file_content: this.state.fileContent });
 
-        await fetch('http://localhost:3002/api/savePdf/', {
-            method: 'POST',
-            body: save_data
-        })
-        .then(res => { return res.json() })
-        .then(res => {
-            if(res.success){
-                setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false, pdf: null }), 1500);
-            }
-            else {
-                alert('Fail.');
-                setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
-            }
-        })
-        .catch((err) => {
-            console.error(err);
-            setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
-        });
+        // await fetch('http://localhost:3002/api/savePdf/', {
+        //     method: 'POST',
+        //     body: save_data
+        // })
+        // .then(res => { return res.json() })
+        // .then(res => {
+        //     if(res.success){
+        //         setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false, pdf: null }), 1500);
+        //     }
+        //     else {
+        //         alert('Fail.');
+        //         setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
+        //     }
+        // })
+        // .catch((err) => {
+        //     console.error(err);
+        //     setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false, pdf: null }), 1500);
+        // });
 
         this.setState({ files: null, waiting: false, fileTitle: '', fileContent: '' });
     };
