@@ -36,10 +36,10 @@ export default class Convertion extends Component {
     }
 
     putFileInDB = async () => {
-        if(this.state.files === null || this.state.fileTitle === '')
+        if(this.state.files === null || this.state.fileTitle === '' || this.state.fileContent === '')
             return null;
 
-        await this.setState({ waiting: true });
+        await this.setState({ waiting: true, upload: 'uploading' });
 
         let wav_file = new Blob([this.state.files[0]], { 'type' : 'audio/wav; codecs=MS_PCM' });
         await fetch('http://007808a4.ngrok.io/test/', {
@@ -141,6 +141,7 @@ export default class Convertion extends Component {
                             <b>上傳狀態：{this.state.upload === 'success' ? '成功！請到下載專區下載' 
                                 : this.state.upload === 'notyet' && this.state.files === null ? '尚未上傳' 
                                 : this.state.upload === 'notyet' && this.state.files !== null ? '等待上傳...' 
+                                : this.state.upload === 'uploading' ? '上傳中...'
                                 : '失敗！請重新上傳'}
                             </b>
                         </span>
