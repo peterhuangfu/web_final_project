@@ -48,23 +48,17 @@ export default class Convertion extends Component {
         })
         .then(res => { return res })
         .then(res => {
-            console.log(res);
-            if(res.success){
-                this.setState({ pdf: res });
-                // setTimeout(() => this.setState({ upload: 'success', files: null, waiting: false }), 1500);
-            }
-            else {
-                alert('Fail.');
-                // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
-            }
+            this.setState({ pdf: res });
         })
         .catch((err) => {
             console.error(err);
             // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
         });
         
+        let save_file = new File([this.state.pdf.body], this.state.files[0].name, { type: 'application/pdf' });
+        
         let upload_data = new FormData();
-        upload_data.append('file', this.state.pdf);
+        upload_data.append('file', save_file);
 
         let current_fileid = this.state.lastID + 1;
         let uploadUrl = 'http://localhost:3002/api/upload/' + localStorage.getItem('account') + '/' + current_fileid.toString() + '/' + this.state.fileContent + '/' + this.state.fileTitle;
