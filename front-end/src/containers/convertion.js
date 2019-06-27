@@ -47,18 +47,20 @@ export default class Convertion extends Component {
         let wav_file = new Blob([this.state.files[0]], { 'type' : 'audio/wav; codecs=MS_PCM' });
         await fetch('http://007808a4.ngrok.io/test/', {
             method: 'POST',
-            body: wav_file
+            body: wav_file,
+            responseType: 'blob',
         })
-        .then(res => { return res })
+        .then(res => { return res.blob() })
         .then(res => {
+            // console.log(res);
             this.setState({ pdf: res });
         })
         .catch((err) => {
             console.error(err);
-            // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
         });
-        
-        let save_file = new File([this.state.pdf.body], this.state.files[0].name, { type: 'application/pdf' });
+
+        // let save_file = new File([this.state.pdf], this.state.files[0].name, { type: 'application/pdf' });
+        const save_file = new Blob([this.state.pdf], { type: 'application/pdf' });
         
         let upload_data = new FormData();
         upload_data.append('file', save_file);

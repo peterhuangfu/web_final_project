@@ -35,10 +35,6 @@ mongoose.connect(
 
 let conn = mongoose.connection;
 let gfs;
-let temp_user_account = "";
-let temp_file_id = "";
-let temp_file_content = "";
-let temp_file_title = "";
 conn.once("open", () => {
   console.log("connected to the database")
   gfs = Grid(conn.db, mongoose.mongo);  
@@ -54,8 +50,7 @@ const storage = new GridFsStorage({
 
   filename: (req, file, cb) => {
     // The way you want to store your file in database
-    cb(null, file.originalname); 
-    console.log(temp_user_account);
+    cb(null, file.originalname);
   },
 
   // Additional Meta-data that you want to store
