@@ -19,8 +19,7 @@ export default class Download extends Component {
         let url = 'http://localhost:3002/api/downloadFile/' + localStorage.getItem('account') + '/' + file_id;
         await fetch(url)
         .then(res => {
-            console.log(res);
-            let blob = new Blob(res.json(), { type: "application/pdf" });
+            let blob = new Blob([res], { type: "application/pdf" });
             FileSaver.saveAs(blob, "file_" + file_id + ".pdf");
         })
         .catch((err) => console.error(err));
