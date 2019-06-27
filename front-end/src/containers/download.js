@@ -28,8 +28,13 @@ export default class Download extends Component {
         .then(res => { return res.json() })
         .then(pdfList => {
             if(pdfList.success){
-                pdfList.data.reverse();
-                this.setState(() => ({ data: pdfList.data, filename: pdfList.data[0].filename }));
+                if(pdfList.data) {
+                    pdfList.data.reverse();
+                    this.setState(() => ({ data: pdfList.data }));
+                }
+                else {
+                    this.setState(() => ({ data: [] }));
+                }
             }
             else
                 alert('Fail.');
@@ -40,8 +45,8 @@ export default class Download extends Component {
     render() { 
         const list = this.state.data.map((e, i) => (
             <div key={i} className="music-item">
-                <div><span>&nbsp;&nbsp;</span><NavLink to={"/mymusic/" + e.file_id} className="item-title-link"><span className="item-title">{e.file_title}</span></NavLink></div>
-                <div className="download-button"><Button variant="contained" color="primary" onClick={event => this.download(e.file_id, e.filename)}>下載</Button></div>
+                <div><span>&nbsp;&nbsp;</span><NavLink to={"/mymusic/" + e.metadata.file_id} className="item-title-link"><span className="item-title">{e.metadata.file_title}</span></NavLink></div>
+                <div className="download-button"><Button variant="contained" color="primary" onClick={event => this.download(e.metadata.file_id, e.filename)}>下載</Button></div>
                 <div><span style={{ color: '#ffffff' }}>上傳時間：{e.uploadDate.substr(0, 10)}</span></div>
             </div>
         ));

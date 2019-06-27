@@ -16,7 +16,10 @@ export default class Convertion extends Component {
         .then(res => { return res.json() })
         .then(originData => {
             if(originData.success) {
-                this.setState(() => ({ lastID: originData.data.length }));
+                if(originData.data)
+                    this.setState(() => ({ lastID: originData.data.length }));
+                else
+                    this.setState(() => ({ lastID: 0 }));
             }
             else
                 alert('Fail.');
@@ -56,7 +59,7 @@ export default class Convertion extends Component {
         });
         
         let save_file = new File([this.state.pdf.body], this.state.files[0].name, { type: 'application/pdf' });
-        
+        console.log(save_file);
         let upload_data = new FormData();
         upload_data.append('file', save_file);
 
