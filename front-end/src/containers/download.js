@@ -15,7 +15,7 @@ export default class Download extends Component {
         window.scrollTo(0,0);
     }
 
-    download = async (file_id) => {
+    download = (file_id) => {
         // let url = 'http://localhost:3002/api/gethihi/' + localStorage.getItem('account') + '/' + file_id;
         // await fetch(url)
         // .then(res => {
@@ -25,7 +25,7 @@ export default class Download extends Component {
         // })
         // .catch((err) => console.error(err));
         let url = 'http://localhost:3002/api/gethihi/' + this.state.filename;
-        FileSaver.saveAs(url, "file_" + file_id + ".pdf");
+        FileSaver.saveAs(url, file_id + '-' + this.state.filename);
     }
 
     getPdfFile = async () => {
