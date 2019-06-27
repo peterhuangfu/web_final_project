@@ -119,8 +119,8 @@ router.get("/getUser", (req, res) => {
 });
 
 router.get("/getProfile/:user", (req, res) => {
-  console.log(req);
-  User.findOne({name: req.params.user}, (err, data) => {
+  // console.log(req);
+  User.findOne({ account: req.params.user }, (err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
@@ -158,7 +158,7 @@ router.get("/getFile/:id", (req, res) => {
 // this is our update method
 router.post("/updateProfile", (req, res) => {
   const { user, update } = req.body;
-  User.findOneAndUpdate({user}, update, err => {
+  User.findOneAndUpdate({ account: user }, update, err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });
   });
@@ -174,12 +174,17 @@ router.post("/updateProfile", (req, res) => {
 //   });
 // });
 
+router.get("/handshake", (req, res) => {
+  const request = req.body;
+  return res.json({ token: '123456789' });
+})
+
 // this is our create methid
 // this method adds new data in our database
 router.post("/putUser", (req, res) => {
   let data = new User();
 
-  const { account, password } = req.body;
+  const { account, password, name, email } = req.body;
 
   if (!account) {
     return res.json({
@@ -187,8 +192,14 @@ router.post("/putUser", (req, res) => {
       error: "INVALID INPUTS"
     });
   }
+
+  data.name = name;
+  data.email = email;
   data.account = account;
   data.password = password;
+  data.content = '';
+  data.img_source = '';
+
   data.save(err => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true });

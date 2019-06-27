@@ -5,19 +5,20 @@ import '../styles/profile.css';
 export default class Profile extends Component {
     constructor(props) {
         super(props);
-        this.state = { id: '', content: '', img_source: '' };
+        this.state = { content: '', img_source: '' };
     }
 
     componentDidMount() {
         window.scrollTo(0,0);
-        let user = localStorage.getItem('name');
+        let user = localStorage.getItem('account');
         let url = 'http://localhost:3002/api/getProfile/' + user;
         fetch(url)
         .then(res => { return res.json() })
         .then(originData => {
-            //console.log(originData.data.content);
             if(originData.success) {
-                this.setState(() => ({ content: originData.data.content, img_source: originData.data.img_source }));
+                if(originData.data !== null)
+                    this.setState({ content: originData.data.content, img_source: originData.data.img_source });
+                setTimeout(() => console.log(this.state), 100);
             }
             else
                 alert('Fail.');
@@ -39,8 +40,11 @@ export default class Profile extends Component {
                 </div>
                 <hr />
                 <div className="profile-container">
-                    <img src={this.state.img_source} alt="" className="profile-img"></img>
-                    <div className="profile-text">{this.state.content.split('\n').map((item, i) => { return <span key={i}>{item}<br /></span> } )}</div>
+                    <div className="profile-img-container">
+                        <img src={this.state.img_source} alt="" className="profile-img"></img>
+                    </div>
+                    {/* <div className="profile-text">{this.state.content.split('\n').map((item, i) => { return <span key={i}>{item}<br /></span> } )}</div> */}
+                    <div className="profile-text"><span>{this.state.content}</span></div>
                 </div>
                 <div style={{ minHeight: '10vh' }}></div>
                 <div className="profile-title">
@@ -48,7 +52,8 @@ export default class Profile extends Component {
                 </div>
                 <hr />
                 <div className="profile-container">
-                    <div className="profile-text-2 profile-text">{this.state.content.split('\n').map((item, i) => { return <span key={i}>{item}<br /></span> } )}</div>
+                    {/* <div className="profile-text-2 profile-text">{this.state.content.split('\n').map((item, i) => { return <span key={i}>{item}<br /></span> } )}</div> */}
+                    <div className="profile-text"><span>{this.state.content}</span></div>
                 </div>
             </div>
         );

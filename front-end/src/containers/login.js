@@ -72,6 +72,9 @@ export default function Login(props) {
     };
 
     const login = async () => {
+        if(user.account === '' || user.password === '')
+            return null;
+        
         let registered = false;
         let passwordRight = false;
 
@@ -82,6 +85,7 @@ export default function Login(props) {
                 if (dat.password === user.password) {
                     passwordRight = true;
                     localStorage.setItem('name', dat.name);
+                    localStorage.setItem('account', dat.account);
                 }
             }
         })
@@ -100,12 +104,6 @@ export default function Login(props) {
         await setUser({ account: '', password: '' });
         if(passwordRight)
             props.login();
-        //console.log(userFromDB[0].account)
-        //console.log(userFromDB[0].account);
-        // axios.post("http://localhost:3002/api/putUser", {
-        //     account: user.account,
-        //     password: user.password,
-        // });
     }
 
     return (

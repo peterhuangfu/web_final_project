@@ -8,9 +8,24 @@ export default class Download extends Component {
         super(props);
         this.state = { data: [] };
     }
+
     componentDidMount() {
         this.getPdfFile();
         window.scrollTo(0,0);
+    }
+
+    download = async (file_id) => {
+        await fetch('http://c07dcf43.ngrok.io/test/')
+        .then(res => { console.log(res) })
+        // .then(pdfList => {
+        //     if(pdfList.success){
+        //         pdfList.data.reverse();
+        //         this.setState(() => ({ data: pdfList.data }));
+        //     }
+        //     else
+        //         alert('Fail.');
+        // })
+        .catch((err) => console.error(err));
     }
 
     getPdfFile = async () => {
@@ -31,7 +46,7 @@ export default class Download extends Component {
         const list = this.state.data.map((e, i) => (
             <div key={i} className="music-item">
                 <div><span>&nbsp;&nbsp;</span><NavLink to={"/mymusic/" + e.file_id} className="item-title-link"><span className="item-title">{e.file_title}</span></NavLink></div>
-                <div className="download-button"><Button variant="contained" color="primary">下載</Button></div>
+                <div className="download-button"><Button variant="contained" color="primary" onClick={event => this.download(e.file_id)}>下載</Button></div>
                 <div><span style={{ color: '#ffffff' }}>上傳時間：{e.upload_time.substr(0, 11)}</span></div>
             </div>
         ));

@@ -10,7 +10,6 @@ const DataSchema = new Schema(
     email: String,
     content: String,
     img_source: String
-
   }
 );
 
