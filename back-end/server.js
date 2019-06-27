@@ -50,21 +50,35 @@ conn.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 const storage = new GridFsStorage({
   url: dbRoute,
+  user_account: temp_user_account,
+  file_id: temp_file_id,
+  file_content: temp_file_content,
+  file_title: temp_file_title,
+  root: 'ctFiles', // Root collection name
+
   filename: (req, file, cb) => {
     // The way you want to store your file in database
     cb(null, file.originalname); 
+    console.log(temp_user_account);
   },
 
   // Additional Meta-data that you want to store
   metadata: function(req, file, cb) {
     cb(null, { originalname: file.originalname });
   },
+  user_account: (req, file, cb) => {
+    cb(null, 'temp_user_account');
+  },
+  file_id: (req, file, cb) => {
+    cb(null, temp_file_id);
+  },
+  file_title: (req, file, cb) => {
+    cb(null, temp_file_title);
+  },
+  file_content: (req, file, cb) => {
+    cb(null, temp_file_content);
+  }
 
-  user_account: temp_user_account,
-  file_id: temp_file_id,
-  file_content: temp_file_content,
-  file_title: temp_file_title,
-  root: 'ctFiles' // Root collection name
 });
 
 const upload = multer({ storage })
