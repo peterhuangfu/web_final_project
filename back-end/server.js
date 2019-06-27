@@ -93,6 +93,7 @@ router.post('/register', (req, res) => {
       error: "INVALID INPUTS"
     });
   }
+
   data.name = name;
   data.account = account;
   data.password = password;
@@ -181,30 +182,6 @@ router.get("/handshake", (req, res) => {
 
 // this is our create methid
 // this method adds new data in our database
-router.post("/putUser", (req, res) => {
-  let data = new User();
-
-  const { account, password, name, email } = req.body;
-
-  if (!account) {
-    return res.json({
-      success: false,
-      error: "INVALID INPUTS"
-    });
-  }
-
-  data.name = name;
-  data.email = email;
-  data.account = account;
-  data.password = password;
-  data.content = '';
-  data.img_source = '';
-
-  data.save(err => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
 
 // append /api for our http requests
 app.use("/api", router);
