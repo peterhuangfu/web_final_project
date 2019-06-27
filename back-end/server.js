@@ -118,12 +118,8 @@ router.get("/getUser", (req, res) => {
 });
 
 router.get("/getProfile/:user", (req, res) => {
-<<<<<<< HEAD
-  User.findOne({name: req.params.user}, (err, data) => {
-=======
   // console.log(req);
   User.findOne({ account: req.params.user }, (err, data) => {
->>>>>>> afe87590f285cc19ec94fb189b4eeb410e74eeea
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
   });
