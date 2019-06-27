@@ -157,7 +157,31 @@ router.get("/gethihi/:filename", (req, res) => {
         // Return response
         return readstream.pipe(res);
     });
+})
 
+router.get("/downloadFile/:user_account/:file_id", (req, res) => {
+  gfs.collection('ctFiles'); //set collection name to lookup into
+
+    /** First check if file exists */
+    console.log(req.params.file_id)
+    console.log(req.params.account)
+    gfs.files.find({file_id: req.params.file_id, user_account: req.params.user_account}).toArray(function(err, files){
+        if(!files || files.length === 0){
+            return res.status(404).json({
+                responseCode: 1,
+                responseMessage: "error"
+            });
+        }
+        // create read stream
+        var readstream = gfs.createReadStream({
+            filename: files[0].filename,
+            root: "ctFiles"
+        });
+        // set the proper content type 
+        res.set('Content-Type', files[0].contentType)
+        // Return response
+        return readstream.pipe(res);
+    });
 })
 
 // handshake
