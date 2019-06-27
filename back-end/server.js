@@ -134,11 +134,25 @@ router.get("/getFile/:user_account", (req, res) => {
     });
 });
 //get one file
-router.get("/getFile/:user/:id", (req, res) => {
-  File.findOne({ user_account: req.params.user, file_id: req.params.id }, (err, data) => {
-    //console.log(req.body);
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
+router.get("/getFile/:user_account/:id", (req, res) => {
+  // File.findOne({ user_account: req.params.user, file_id: req.params.id }, (err, data) => {
+  //   //console.log(req.body);
+  //   if (err) return res.json({ success: false, error: err });
+  //   return res.json({ success: true, data: data });
+  // });
+  gfs.collection('ctFiles'); //set collection name to lookup into
+
+    /** First check if file exists */
+    console.log(req.params.user_account)
+    console.log(req.params.id)
+    gfs.files.find({user_account: req.params.user_account, file_id: req.params.id}).toArray(function(err, files){
+      if(!files || files.length === 0){
+          return res.status(404).json({
+              responseCode: 1,
+              responseMessage: "error"
+          });
+      }
+      return res.json({success: true, data:files});
   });
 });
 
