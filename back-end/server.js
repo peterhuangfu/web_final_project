@@ -35,6 +35,10 @@ mongoose.connect(
 
 let conn = mongoose.connection;
 let gfs;
+let temp_user_account = "";
+let temp_file_id = "";
+let temp_file_content = "";
+let temp_file_title = "";
 conn.once("open", () => {
   console.log("connected to the database")
   gfs = Grid(conn.db, mongoose.mongo);  
@@ -55,6 +59,11 @@ const storage = new GridFsStorage({
   metadata: function(req, file, cb) {
     cb(null, { originalname: file.originalname });
   },
+
+  user_account: temp_user_account,
+  file_id: temp_file_id,
+  file_content: temp_file_content,
+  file_title: temp_file_title,
   root: 'ctFiles' // Root collection name
 });
 
@@ -62,7 +71,11 @@ const upload = multer({ storage })
 
 // all POST ------------------------------------------------------
 // upload file
-router.post('/upload', upload.single('file'), (req, res) => {
+router.post('/upload/:user_account/:file_id/:file_content/:file_title', upload.single('file'), (req, res) => {
+  temp_user_account = req.params.user_account;
+  temp_file_id = req.params.file_id;
+  temp_file_content = req.params.file_content;
+  temp_file_title = req.params.file_title;
   return res.json({ success: true, file:req.file });
 });
 
