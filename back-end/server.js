@@ -50,12 +50,12 @@ const storage = new GridFsStorage({
 
   filename: (req, file, cb) => {
     // The way you want to store your file in database
-    cb(null, file.originalname);
+    cb(null, req.params.filename);
   },
 
   // Additional Meta-data that you want to store
   metadata: function(req, file, cb) {
-    cb(null, { originalname: file.originalname, user_account: req.params.user_account, file_id: req.params.file_id, file_title: req.params.file_title, file_content: req.params.file_content });
+    cb(null, { originalname: req.params.filename, user_account: req.params.user_account, file_id: req.params.file_id, file_title: req.params.file_title, file_content: req.params.file_content });
   }
 
 });
@@ -64,7 +64,7 @@ const upload = multer({ storage })
 
 // all POST ------------------------------------------------------
 // upload file
-router.post('/upload/:user_account/:file_id/:file_content/:file_title', upload.single('file'), (req, res) => {
+router.post('/upload/:filename/:user_account/:file_id/:file_content/:file_title', upload.single('file'), (req, res) => {
   return res.json({ success: true, file:req.file });
 });
 

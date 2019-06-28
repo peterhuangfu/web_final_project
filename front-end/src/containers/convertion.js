@@ -61,12 +61,11 @@ export default class Convertion extends Component {
 
         // let save_file = new File([this.state.pdf], this.state.files[0].name, { type: 'application/pdf' });
         const save_file = new Blob([this.state.pdf], { type: 'application/pdf' });
-        
         let upload_data = new FormData();
         upload_data.append('file', save_file);
 
         let current_fileid = this.state.lastID + 1;
-        let uploadUrl = 'http://localhost:3002/api/upload/' + localStorage.getItem('account') + '/' + current_fileid.toString() + '/' + this.state.fileContent + '/' + this.state.fileTitle;
+        let uploadUrl = 'http://localhost:3002/api/upload/' + this.state.files[0].name + '/' + localStorage.getItem('account') + '/' + current_fileid.toString() + '/' + this.state.fileContent + '/' + this.state.fileTitle;
         await fetch(uploadUrl, {
             method: 'POST',
             body: upload_data
