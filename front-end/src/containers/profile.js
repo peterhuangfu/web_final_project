@@ -5,7 +5,7 @@ import '../styles/profile.css';
 export default class Profile extends Component {
     constructor(props) {
         super(props);
-        this.state = { content: '', img_source: '' };
+        this.state = { content: '', img_source: '', upload: [] };
     }
 
     componentDidMount() {
@@ -23,6 +23,22 @@ export default class Profile extends Component {
                 alert('Fail.');
         })
         .catch((err) => console.error(err));
+
+        let url2 = 'http://localhost:3002/api/getFile/' + user;
+        fetch(url2)
+        .then(res => { return res.json() })
+        .then(originData => {
+            if(originData.success) {
+                if(originData.data !== null) {
+                    originData.data.reverse();
+                    this.setState({ upload: originData.data });
+                }
+            }
+            else
+                alert('Fail.');
+        })
+        .catch((err) => console.error(err));
+
         window.scrollTo(0,0);
     }
 
@@ -31,6 +47,12 @@ export default class Profile extends Component {
     };
 
     render() {
+        const upload_record = this.state.upload.map((e, i) => (
+            <div key={i} style={{ width: '100%', minHeight: '5vh', maxHeight: '7vh', marginLeft: '15vw' }}>
+                <div style={{ minWidth: '40vw', maxHeight: '50vw', display: 'inline-block', fontSize: '20px' }}><span>{i+1 + '.'}&nbsp;&nbsp;{e.metadata.file_title}</span></div>
+                <div style={{ marginLeft: '10vw', display: 'inline-block', fontSize: '20px' }}><span>{e.uploadDate.substr(0, 10)}</span></div>
+            </div>
+        ));
         return (
             <div className="profile">
                 <div className="profile-title">
@@ -52,7 +74,7 @@ export default class Profile extends Component {
                 <hr />
                 <div className="profile-container">
                     {/* <div className="profile-text-2 profile-text">{this.state.content.split('\n').map((item, i) => { return <span key={i}>{item}<br /></span> } )}</div> */}
-                    <div className="profile-text profile-text-2"><span>{this.state.content}</span></div>
+                    <div className="profile-text profile-text-2">{upload_record}</div>
                 </div>
             </div>
         );
