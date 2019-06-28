@@ -52,7 +52,6 @@ export default class Convertion extends Component {
         })
         .then(res => { return res.blob() })
         .then(res => {
-            // console.log(res);
             this.setState({ pdf: res });
         })
         .catch((err) => {
@@ -61,6 +60,7 @@ export default class Convertion extends Component {
 
         // let save_file = new File([this.state.pdf], this.state.files[0].name, { type: 'application/pdf' });
         const save_file = new Blob([this.state.pdf], { type: 'application/pdf' });
+        let save_file = new File([this.state.pdf.body], this.state.files[0].name, { type: 'application/pdf' });
         let upload_data = new FormData();
         upload_data.append('file', save_file);
 
