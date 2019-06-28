@@ -157,7 +157,7 @@ export default class Homepage extends Component {
                         </Switch>
                     </section>
                     <footer className="homepage-footer">
-                        copyright@ 盧盧專題小組
+                        copyright@ HuangFu and JT and oomtball
                     </footer>
                 </div>
             </div>
