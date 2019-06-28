@@ -33,7 +33,7 @@ export default class MymusicDetail extends Component {
         return this.state.data ? (
             <div>
                 <div className="music-itself">
-                    <Post id={id} title={this.state.data.file_title} source="http://i.imgur.com/Dqef6.jpg" author={this.state.yourself} content={this.state.data.file_description} time={this.state.data[0].uploadDate.substr(0, 10)} />
+                    <Post id={id} title={this.state.data[0].metadata.file_title} source="http://i.imgur.com/Dqef6.jpg" author={this.state.yourself} content={this.state.data[0].metadata.file_content} time={this.state.data[0].uploadDate.substr(0, 10)} />
                 </div>
                 <div className="music-detail_button-container">
                     <button className="music-detail_button" onClick={this.goBack}><b>上一頁</b></button>

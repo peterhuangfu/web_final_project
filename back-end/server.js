@@ -35,10 +35,6 @@ mongoose.connect(
 
 let conn = mongoose.connection;
 let gfs;
-let temp_user_account = "";
-let temp_file_id = "";
-let temp_file_content = "";
-let temp_file_title = "";
 conn.once("open", () => {
   console.log("connected to the database")
   gfs = Grid(conn.db, mongoose.mongo);  
@@ -50,16 +46,30 @@ conn.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 const storage = new GridFsStorage({
   url: dbRoute,
+<<<<<<< HEAD
   filename: (req, file, cb) => {
     // The way you want to store your file in database
     cb(null, file.originalname); 
+=======
+  root: 'ctFiles', // Root collection name
+
+  filename: (req, file, cb) => {
+    // The way you want to store your file in database
+    cb(null, file.originalname);
+>>>>>>> 456645891e21d3d2fbbe7d8845ada12290bc2ff4
   },
 
   // Additional Meta-data that you want to store
   metadata: function(req, file, cb) {
+<<<<<<< HEAD
     cb(null, { originalname: file.originalname });
   },
   root: 'ctFiles' // Root collection name
+=======
+    cb(null, { originalname: file.originalname, user_account: req.params.user_account, file_id: req.params.file_id, file_title: req.params.file_title, file_content: req.params.file_content });
+  }
+
+>>>>>>> 456645891e21d3d2fbbe7d8845ada12290bc2ff4
 });
 
 const upload = multer({ storage })
@@ -67,10 +77,6 @@ const upload = multer({ storage })
 // all POST ------------------------------------------------------
 // upload file
 router.post('/upload/:user_account/:file_id/:file_content/:file_title', upload.single('file'), (req, res) => {
-  temp_user_account = req.params.user_account;
-  temp_file_id = req.params.file_id;
-  temp_file_content = req.params.file_content;
-  temp_file_title = req.params.file_title;
   return res.json({ success: true, file:req.file });
 });
 
@@ -129,14 +135,14 @@ router.get("/getProfile/:user", (req, res) => {
 // get all file
 router.get("/getFile/:user_account", (req, res) => {
   gfs.collection('ctFiles'); //set collection name to lookup into
-
     /** First check if file exists */
-    gfs.files.find({user_account: req.params.user_account}).toArray(function(err, files){
+    gfs.files.find({ "metadata.user_account": req.params.user_account }).toArray(function(err, files){
         if(!files || files.length === 0){
-            return res.status(404).json({
-                responseCode: 1,
-                responseMessage: "error"
-            });
+            // return res.status(404).json({
+            //     responseCode: 1,
+            //     responseMessage: "error"
+            // });
+            return res.json({ success: true, data: []});
         }
         return res.json({success: true, data:files});
     });
@@ -151,9 +157,9 @@ router.get("/getFile/:user_account/:id", (req, res) => {
   gfs.collection('ctFiles'); //set collection name to lookup into
 
     /** First check if file exists */
-    console.log(req.params.user_account)
-    console.log(req.params.id)
-    gfs.files.find({user_account: req.params.user_account, file_id: req.params.id}).toArray(function(err, files){
+    // console.log(req.params.user_account)
+    // console.log(req.params.id)
+    gfs.files.find({ "metadata.user_account": req.params.user_account, "metadata.file_id": req.params.id }).toArray(function(err, files){
       if(!files || files.length === 0){
           return res.status(404).json({
               responseCode: 1,
@@ -169,7 +175,7 @@ router.get("/gethihi/:filename", (req, res) => {
   gfs.collection('ctFiles'); //set collection name to lookup into
 
     /** First check if file exists */
-    gfs.files.find({filename: req.params.filename}).toArray(function(err, files){
+    gfs.files.find({ filename: req.params.filename }).toArray(function(err, files){
         if(!files || files.length === 0){
             return res.status(404).json({
                 responseCode: 1,
@@ -192,16 +198,16 @@ router.get("/downloadFile/:user_account/:file_id", (req, res) => {
   gfs.collection('ctFiles'); //set collection name to lookup into
 
     /** First check if file exists */
-    console.log(req.params.file_id)
-    console.log(req.params.user_account)
-    gfs.files.find({file_id: req.params.file_id, user_account: req.params.user_account}).toArray(function(err, files){
+    // console.log(req.params.file_id)
+    // console.log(req.params.user_account)
+    gfs.files.find({ "metadata.file_id": req.params.file_id, "metadata.user_account": req.params.user_account }).toArray(function(err, files){
         if(!files || files.length === 0){
             return res.status(404).json({
                 responseCode: 1,
                 responseMessage: "error"
             });
         }
-        console.log(files[0].filename)
+        // console.log(files[0].filename)
         // create read stream
         var readstream = gfs.createReadStream({
             filename: files[0].filename,

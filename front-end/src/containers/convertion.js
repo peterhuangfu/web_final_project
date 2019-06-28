@@ -16,7 +16,10 @@ export default class Convertion extends Component {
         .then(res => { return res.json() })
         .then(originData => {
             if(originData.success) {
-                this.setState(() => ({ lastID: originData.data.length }));
+                if(originData.data)
+                    this.setState(() => ({ lastID: originData.data.length }));
+                else
+                    this.setState(() => ({ lastID: 0 }));
             }
             else
                 alert('Fail.');
@@ -38,26 +41,35 @@ export default class Convertion extends Component {
     putFileInDB = async () => {
         if(this.state.files === null || this.state.fileTitle === '' || this.state.fileContent === '')
             return null;
-        console.log(this.state.files[0])
 
         await this.setState({ waiting: true, upload: 'uploading' });
 
         let wav_file = new Blob([this.state.files[0]], { 'type' : 'audio/wav; codecs=MS_PCM' });
         await fetch('http://007808a4.ngrok.io/test/', {
             method: 'POST',
-            body: wav_file
+            body: wav_file,
+            responseType: 'blob',
         })
-        .then(res => { return res })
+        .then(res => { return res.blob() })
         .then(res => {
+<<<<<<< HEAD
+=======
+            // console.log(res);
+>>>>>>> 456645891e21d3d2fbbe7d8845ada12290bc2ff4
             this.setState({ pdf: res });
         })
         .catch((err) => {
             console.error(err);
-            // setTimeout(() => this.setState({ upload: 'fail', files: null, waiting: false }), 1500);
         });
+
+        // let save_file = new File([this.state.pdf], this.state.files[0].name, { type: 'application/pdf' });
+        const save_file = new Blob([this.state.pdf], { type: 'application/pdf' });
         
+<<<<<<< HEAD
         let save_file = new File([this.state.pdf.body], this.state.files[0].name, { type: 'application/pdf' });
         
+=======
+>>>>>>> 456645891e21d3d2fbbe7d8845ada12290bc2ff4
         let upload_data = new FormData();
         upload_data.append('file', save_file);
 

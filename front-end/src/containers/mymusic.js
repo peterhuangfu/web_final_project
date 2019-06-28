@@ -23,8 +23,14 @@ export default class Mymusic extends Component {
         .then(res => { return res.json() })
         .then(originData => {
             if(originData.success) {
-                originData.data.reverse();
-                this.setState(() => ({ data: originData.data }));
+                if(originData.data) {
+                    originData.data.reverse();
+                    this.setState(() => ({ data: originData.data }));
+                }
+                else {
+                    this.setState(() => ({ data: [] }));
+                }
+                
             }
             else
                 alert('Fail.');
@@ -39,14 +45,14 @@ export default class Mymusic extends Component {
                     {this.state.data.map((data, i) => (
                     <GridListTile key={i} style={{ width: '25vw', height: '40vh', padding: '1em' }}>
                         <div className="hover-screen">
-                            <NavLink to={"/mymusic/" + data.file_id}>
-                                <img src='http://i.imgur.com/Dqef6.jpg' alt={data.file_title} style={{ maxWidth: '25vw', height: '75%' }}/>
+                            <NavLink to={"/mymusic/" + data.metadata.file_id}>
+                                <img src='http://i.imgur.com/Dqef6.jpg' alt={data.metadata.file_title} style={{ maxWidth: '25vw', height: '75%' }}/>
                                 <GridListTileBar
                                 style={{ height: '25%' }}
-                                title={data.file_title}
+                                title={data.metadata.file_title}
                                 subtitle={<span>by {this.state.yourself}</span>}
                                 actionIcon={
-                                    <IconButton aria-label={`info about ${data.file_title}`} style={{ color: 'rgba(255, 255, 255, 0.54)' }}>
+                                    <IconButton aria-label={`info about ${data.metadata.file_title}`} style={{ color: 'rgba(255, 255, 255, 0.54)' }}>
                                         <InfoIcon />
                                     </IconButton>
                                 }
