@@ -21,7 +21,7 @@ https://github.com/peterhuangfu/web_final_project.git
 ## [使用之第三方套件/框架/原始碼]
 前端 — React + Material-UI
 後端 — node.js + Express + MongoDB
-轉譜的server — Django [特別感謝同學鄭揚、蔡涵如的幫忙]
+轉譜的server — Django [特別感謝鄭揚、蔡涵如同學的幫忙]
 
 ## [Demo]
 https://www.youtube.com/watch?v=nrVDhs5fIUM
