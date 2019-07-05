@@ -45,7 +45,7 @@ export default class Convertion extends Component {
         await this.setState({ waiting: true, upload: 'uploading' });
 
         let wav_file = new Blob([this.state.files[0]], { 'type' : 'audio/wav; codecs=MS_PCM' });
-        await fetch('http://c5975732.ngrok.io/test/', {
+        await fetch('http://126047f1.ngrok.io/test', {
             method: 'POST',
             body: wav_file,
             responseType: 'blob',
