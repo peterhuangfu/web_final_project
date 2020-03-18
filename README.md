@@ -11,12 +11,9 @@ https://github.com/peterhuangfu/WebProg2019_Final.git
 ### Installation
 ```
 git clone
-cd WebProg2019_Final
-npm install
-cd front-end
-npm install
-cd ../back-end
-npm install
+cd WebProg2019_Final && npm install
+cd front-end && npm install
+cd ../back-end && npm install
 ```
 ### Run
 Front end
@@ -40,7 +37,7 @@ node server.js
 4. 雖然有 deploy 到 heroku 上面，但是上傳音檔及下載 PDF 的部分會有不知名原因導致失敗，這部分礙於時間還來不及解決，因此可以當作沒有deploy QQ  
 
 ## 使用之第三方套件 / 框架 / 原始碼
-Front end — React + Material-UI  
+Front end — React + Material UI  
 Back end — Node.js + Express + MongoDB  
 轉譜的 Server — Django [特別感謝鄭揚、蔡涵如同學的幫忙]  
 
