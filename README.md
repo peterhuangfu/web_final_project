@@ -45,7 +45,7 @@ Back end — Node.js + Express + MongoDB
 轉譜的 Server — Django [特別感謝鄭揚、蔡涵如同學的幫忙]  
 
 ## Demo
-https://www.youtube.com/watch?v=nrVDhs5fIUM  
+Youtube：https://www.youtube.com/watch?v=nrVDhs5fIUM  
 
 ## Deployed Repo
 https://luluwebfinal.herokuapp.com/  
